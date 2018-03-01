@@ -1,8 +1,7 @@
 from peewee import *
-from app import app
 
-
-db = MySQLDatabase(**app.config['DATABASE'])
+# db = MySQLDatabase(**app.config['DATABASE'])
+db = SqliteDatabase('test.db')
 
 
 class BaseModel(Model):
