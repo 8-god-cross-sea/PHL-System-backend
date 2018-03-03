@@ -1,12 +1,15 @@
-from flask_script import Manager
 from models import *
-from app import app
-
-manager = Manager(app)
+import click
 
 
-@manager.command
+@click.group()
+def cli():
+    pass
+
+
+@click.command()
 def init_db():
+    """initialize database and create schema"""
     db.connect()
 
     # create tables
@@ -14,11 +17,21 @@ def init_db():
     db.create_tables(models)
 
     # initialize data
-    admin = User.create(username='admin', password='admin')
+    admin = User.create(id='1', username='admin', password='admin')
     admin.save()
 
+    click.echo('db initialization finished')
     db.close()
 
 
-if __name__ == "__main__":
-    manager.run()
+@click.command()
+def drop_db():
+    """drop database"""
+    click.echo('Dropped the database')
+
+
+cli.add_command(init_db)
+cli.add_command(drop_db)
+
+if __name__ == '__main__':
+    cli()

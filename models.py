@@ -10,6 +10,7 @@ class BaseModel(Model):
 
 
 class User(BaseModel):
+    id = UUIDField(unique=True)
     username = CharField(unique=True)
     password = CharField()
 
