@@ -16,3 +16,9 @@ class User(BaseModel):
 
 
 models = [cls for cls in BaseModel.__subclasses__()]
+
+if __name__ == '__main__':
+    from playhouse.shortcuts import model_to_dict
+
+    for user in User.select():
+        print(model_to_dict(user))

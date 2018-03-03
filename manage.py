@@ -1,5 +1,6 @@
 from models import *
 import click
+import uuid
 
 
 @click.group()
@@ -17,7 +18,7 @@ def init_db():
     db.create_tables(models)
 
     # initialize data
-    admin = User.create(id='1', username='admin', password='admin')
+    admin = User.create(id=uuid.uuid4(), username='admin', password='admin')
     admin.save()
 
     click.echo('db initialization finished')
