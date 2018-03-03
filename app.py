@@ -1,9 +1,7 @@
-from flask import Flask
-app = Flask(__name__)
-app.config.from_json('config.json')
+import settings
 
+settings.init()
 from resource.UserResource import *
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    settings.app.run(debug=True)

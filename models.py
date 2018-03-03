@@ -1,7 +1,9 @@
 from peewee import *
+from playhouse.db_url import connect
+import settings
 
-# db = MySQLDatabase(**app.config['DATABASE'])
-db = SqliteDatabase('test.db')
+app = settings.app
+db = connect(app.config['DATABASE_URI'])
 
 
 class BaseModel(Model):
@@ -15,7 +17,7 @@ class User(BaseModel):
     password = CharField()
 
 
-models = [cls for cls in BaseModel.__subclasses__()]
+tables = [cls for cls in BaseModel.__subclasses__()]
 
 if __name__ == '__main__':
     from playhouse.shortcuts import model_to_dict

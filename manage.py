@@ -14,8 +14,8 @@ def init_db():
     db.connect()
 
     # create tables
-    db.drop_tables(models)
-    db.create_tables(models)
+    db.drop_tables(tables)
+    db.create_tables(tables)
 
     # initialize data
     admin = User.create(id=uuid.uuid4(), username='admin', password='admin')
