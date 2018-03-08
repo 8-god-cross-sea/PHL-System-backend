@@ -1,6 +1,6 @@
 from flask_peewee.rest import RestResource
 
-from auth import user_auth
+from auth import auth
 from models import User
 from api import api
 
@@ -18,4 +18,4 @@ class UserResource(RestResource):
         ]
 
 
-api.register(User, UserResource, auth=user_auth)
+api.register(User, UserResource)

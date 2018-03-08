@@ -16,3 +16,7 @@ class User(db.Model, BaseUser):
 
 
 tables = [cls for cls in db.Model.__subclasses__()]
+
+if __name__ == '__main__':
+    User.create_table()
+    User.create(username='admin', password='admin', email='admin@admin.com')

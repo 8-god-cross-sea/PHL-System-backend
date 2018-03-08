@@ -1,6 +1,10 @@
 from flask_peewee.rest import RestAPI
-
 from app import app
-from auth import user_auth
 
-api = RestAPI(app, default_auth=user_auth)
+
+class NoAuthentication(object):
+    def authorize(self):
+        return True
+
+
+api = RestAPI(app, default_auth=NoAuthentication())
