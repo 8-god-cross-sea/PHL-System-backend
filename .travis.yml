@@ -1,0 +1,24 @@
+sudo: enabled
+
+language: python
+
+python:
+  - 3.6
+
+notifications:
+  email:
+    recipients:
+      
+  on_success: never
+  on_failure: always
+
+install:
+  - pip install -r requirements.txt
+before_install: 
+
+script:
+  - python Test.py
+
+before_deploy: 
+
+deploy:
