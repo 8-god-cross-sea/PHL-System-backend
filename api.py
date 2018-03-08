@@ -1,11 +1,6 @@
-from flask_peewee.rest import RestAPI, UserAuthentication, AdminAuthentication
+from flask_peewee.rest import RestAPI
 
 from app import app
-from auth import auth
-
-
-user_auth = UserAuthentication(auth)
-admin_auth = AdminAuthentication(auth)
-
+from auth import user_auth
 
 api = RestAPI(app, default_auth=user_auth)
