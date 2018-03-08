@@ -1,7 +1,7 @@
-import settings
+from flask import Flask
+from flask_peewee.db import Database
 
-settings.init()
-from resource.UserResource import *
+app = Flask(__name__)
+app.config.from_json('config.json')
 
-if __name__ == '__main__':
-    settings.app.run(debug=True)
+db = Database(app)

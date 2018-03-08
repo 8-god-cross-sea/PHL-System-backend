@@ -1,26 +1,18 @@
+import datetime
+
+from flask_peewee.auth import BaseUser
 from peewee import *
-from playhouse.db_url import connect
-import settings
 
-app = settings.app
-db = connect(app.config['DATABASE_URI'])
+from app import db
 
 
-class BaseModel(Model):
-    class Meta:
-        database = db
-
-
-class User(BaseModel):
-    id = UUIDField(unique=True)
-    username = CharField(unique=True)
+class User(db.Model, BaseUser):
+    username = CharField()
     password = CharField()
+    email = CharField()
+    join_date = DateTimeField(default=datetime.datetime.now)
+    active = BooleanField(default=True)
+    admin = BooleanField(default=False)
 
 
-tables = [cls for cls in BaseModel.__subclasses__()]
-
-if __name__ == '__main__':
-    from playhouse.shortcuts import model_to_dict
-
-    for user in User.select():
-        print(model_to_dict(user))
+tables = [cls for cls in db.Model.__subclasses__()]

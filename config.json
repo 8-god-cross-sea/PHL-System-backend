@@ -1,4 +1,8 @@
 {
-  "DATABASE_URI": "sqlite:///test.db",
-  "SECRET_KEY": "a secret key should be put here"
+  "DATABASE": {
+    "name": "dev.db",
+    "engine": "peewee.SqliteDatabase"
+  },
+  "SECRET_KEY": "a secret key should be put here",
+  "DEBUG": true
 }
