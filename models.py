@@ -18,5 +18,6 @@ class User(db.Model, BaseUser):
 tables = [cls for cls in db.Model.__subclasses__()]
 
 if __name__ == '__main__':
+    from flask_peewee.utils import make_password
     User.create_table()
-    User.create(username='admin', password='admin', email='admin@admin.com')
+    User.create(username='admin', password=make_password('admin'), email='admin@admin.com')
