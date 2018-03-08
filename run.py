@@ -1,6 +1,6 @@
 from auth import *
 from api import api
-from resource import register_resource
+from resource import *
 
 api.setup()
 
