@@ -2,7 +2,7 @@ from .ResourceBase import BaseRestResource as Rest
 from auth import auth
 from models import User
 from api import api
-from flask import request
+from flask import request, Response
 
 
 class UserResource(Rest):
@@ -22,14 +22,17 @@ class UserResource(Rest):
         else:
             return self.response({'status': 'incorrect username or password', 'ret_code': 101})
 
+    @Rest.route('/logout', ['GET'])
     def logout(self):
-        pass
+        auth.logout_user()
+        return Response('You are now logged out')
 
     @Rest.route('/r', ['POST'])
     def r1(self):
         return self.response({'post': 'post'})
 
     @Rest.route('/r', ['GET', 'PUT'])
+    @Rest.permission()
     def r2(self):
         return self.response({'get': 'get'})
 

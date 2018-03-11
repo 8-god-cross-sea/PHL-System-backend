@@ -1,15 +1,7 @@
 from flask_peewee.rest import RestResource
 from auth import auth
-from flask import request
-
-
-class AuthorizedRestResource(RestResource):
-
-    def get_urls(self):
-        return [(url, auth.login_required(func)) for url, func in self.authorized_urls()]
-
-    def authorized_urls(self):
-        raise NotImplemented
+from flask import request, Response
+import functools
 
 
 class BaseRestResource(RestResource):
@@ -21,6 +13,21 @@ class BaseRestResource(RestResource):
             method_dict = cls.url_manager.setdefault(url, {})
             method_dict.update({key: func for key in method})
             return func
+
+        return decorator
+
+    @classmethod
+    def permission(cls, mod=0):
+        def decorator(func):
+            @functools.wraps(func)
+            def wrapper(*args, **kwargs):
+                user = auth.get_logged_in_user()
+                if user and (not mod or mod & user.permission):
+                    return func(*args, **kwargs)
+                else:
+                    return Response('Forbidden', 403)
+
+            return wrapper
 
         return decorator
 
@@ -44,10 +51,10 @@ class BaseRestResource(RestResource):
         urls = []
         for key, value in self.url_manager.items():
             f = self.method_dispatcher(
-                value.get('GET', None),
-                value.get('POST', None),
-                value.get('PUT', None),
-                value.get('DELETE', None)
+                value.get('GET'),
+                value.get('POST'),
+                value.get('PUT'),
+                value.get('DELETE')
             )
             f = self.rename(key)(f)  # this rename method avoids view mapping overriding error
             urls.append((key, self.require_method(f, list(value.keys()))))
