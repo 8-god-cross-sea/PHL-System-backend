@@ -8,7 +8,14 @@ class BaseRestResource(RestResource):
     url_manager = {}
 
     @classmethod
-    def route(cls, url, method):
+    def route(cls, url, method=['GET']):
+        """route url mapping for resources
+
+        :param url: url for visiting resources
+        :param method: a list containing allowed HTTP method
+        :return:
+        """
+
         def decorator(func):
             method_dict = cls.url_manager.setdefault(url, {})
             method_dict.update({key: func for key in method})
@@ -18,6 +25,12 @@ class BaseRestResource(RestResource):
 
     @classmethod
     def permission(cls, mod=0):
+        """set control permission for the specific resources
+
+        :param mod: an integer indicates permission
+        :return: decorator
+        """
+
         def decorator(func):
             @functools.wraps(func)
             def wrapper(*args, **kwargs):

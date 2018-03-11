@@ -22,14 +22,10 @@ class UserResource(Rest):
         else:
             return self.response({'status': 'incorrect username or password', 'ret_code': 101})
 
-    @Rest.route('/logout', ['GET'])
+    @Rest.route('/logout')
     def logout(self):
         auth.logout_user()
         return Response('You are now logged out')
-
-    @Rest.route('/r', ['POST'])
-    def r1(self):
-        return self.response({'post': 'post'})
 
     @Rest.route('/r', ['GET', 'PUT'])
     @Rest.permission()

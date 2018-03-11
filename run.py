@@ -1,9 +1,7 @@
-from auth import *
-from api import api
-from resource import *
+from app import app
+from resource import api
 
 api.setup()
-
 
 if __name__ == '__main__':
     app.run()
