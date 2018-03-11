@@ -1,7 +1,6 @@
 from flask_peewee.rest import RestResource
 from auth import auth
 from flask import request
-from functools import wraps
 
 
 class AuthorizedRestResource(RestResource):
@@ -20,13 +19,8 @@ class BaseRestResource(RestResource):
     def route(cls, url, method):
         def decorator(func):
             method_dict = cls.url_manager.setdefault(url, {})
-            method_dict[method] = func
-
-            @wraps(func)
-            def wrapper(*args, **kwargs):
-                return func(*args, **kwargs)
-
-            return wrapper
+            method_dict.update({key: func for key in method})
+            return func
 
         return decorator
 
@@ -55,6 +49,6 @@ class BaseRestResource(RestResource):
                 value.get('PUT', None),
                 value.get('DELETE', None)
             )
-            f = self.rename(key)(f)
+            f = self.rename(key)(f)  # this rename method avoids view mapping overriding error
             urls.append((key, self.require_method(f, list(value.keys()))))
         return urls

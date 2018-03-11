@@ -11,7 +11,7 @@ class UserResource(Rest):
     def get_api_name(self):
         return 'user'
 
-    @Rest.route('/login', 'POST')
+    @Rest.route('/login', ['POST'])
     def login(self):
         username = request.form['username']
         password = request.form['password']
@@ -25,11 +25,11 @@ class UserResource(Rest):
     def logout(self):
         pass
 
-    @Rest.route('/r', 'POST')
+    @Rest.route('/r', ['POST'])
     def r1(self):
         return self.response({'post': 'post'})
 
-    @Rest.route('/r', 'GET')
+    @Rest.route('/r', ['GET', 'PUT'])
     def r2(self):
         return self.response({'get': 'get'})
 
