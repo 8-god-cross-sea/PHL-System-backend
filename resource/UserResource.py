@@ -35,7 +35,7 @@ class UserResource(Rest):
 
     @Rest.route('/list')
     @Rest.permission(__user_admin_mask)
-    def user_list(self):
+    def api_list(self):
         return self.object_list()
 
 

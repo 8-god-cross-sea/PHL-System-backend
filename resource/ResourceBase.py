@@ -44,32 +44,30 @@ class BaseRestResource(RestResource):
 
         return decorator
 
-    def method_dispatcher(self, get=None, post=None, put=None, delete=None):
-        dispatch = {'GET': get, 'POST': post, 'PUT': put, 'DELETE': delete}
-
+    def method_dispatcher(self, **method_dict):
         def wrapper(*args, **kwargs):
-            return dispatch[request.method](self, *args, **kwargs)
+            return method_dict[request.method](self, *args, **kwargs)
 
         return wrapper
 
     @staticmethod
     def rename(new_name):
         def decorator(func):
-            # TODO need fixed
-            func.__name__ = new_name if new_name != '/list' else 'api_list'
+            func.__name__ = new_name
             return func
 
         return decorator
 
     def get_urls(self):
+        """dynamically create url mapping.
+
+        Use a method dispatcher to create function. The name of the function needs to be restored since RestResource use
+        function.__name__ to create view mapping. Note that the origin get_urls() in RestResource cannot dispatch
+        multiple method for single entry, only the first registered method's name will be treated as the mapping name.
+        """
         urls = []
-        for key, value in self.url_manager.items():
-            f = self.method_dispatcher(
-                value.get('GET'),
-                value.get('POST'),
-                value.get('PUT'),
-                value.get('DELETE')
-            )
-            f = self.rename(key)(f)  # this rename method avoids view mapping overriding error
-            urls.append((key, self.require_method(f, list(value.keys()))))
+        for key, dispatcher in self.url_manager.items():
+            f = self.method_dispatcher(**dispatcher)
+            f = self.rename(next(iter(dispatcher.values())).__name__)(f)            # use first function name
+            urls.append((key, self.require_method(f, list(dispatcher.keys()))))
         return urls
