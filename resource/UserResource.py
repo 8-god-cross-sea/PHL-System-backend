@@ -3,6 +3,8 @@ from auth import auth
 from models import User
 from api import api
 from flask import request, Response
+import json
+from flask_peewee.utils import make_password
 
 
 class UserResource(Rest):
@@ -33,10 +35,30 @@ class UserResource(Rest):
     def user_detail(self):
         return self.object_detail(auth.get_logged_in_user())
 
+    @Rest.route('/', ['POST', 'PUT'])
+    @Rest.permission()
+    def create_user(self):
+        try:
+            ret = self.create()
+        except Exception as e:
+            return Response(str(e), 400)
+        return ret
+
     @Rest.route('/list')
     @Rest.permission(__user_admin_mask)
     def api_list(self):
         return self.object_list()
+
+    def read_request_data(self):
+        """
+        overrides read_request_data() to mask password
+        """
+        data = request.data or request.form.get('data') or ''
+        dt = json.loads(data.decode('utf8'))
+        password = dt.get('password')
+        if password:
+            dt['password'] = make_password(password)
+        return dt
 
 
 api.register(User, UserResource)
