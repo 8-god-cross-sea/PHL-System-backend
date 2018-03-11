@@ -6,7 +6,8 @@ from flask import request, Response
 
 
 class UserResource(Rest):
-    exclude = ('password', 'email',)
+    exclude = ('password', 'permission')
+    __user_admin_mask = int('10000', 2)
 
     def get_api_name(self):
         return 'user'
@@ -27,10 +28,15 @@ class UserResource(Rest):
         auth.logout_user()
         return Response('You are now logged out')
 
-    @Rest.route('/r', ['GET', 'PUT'])
+    @Rest.route('/')
     @Rest.permission()
-    def r2(self):
-        return self.response({'get': 'get'})
+    def user_detail(self):
+        return self.object_detail(auth.get_logged_in_user())
+
+    @Rest.route('/list')
+    @Rest.permission(__user_admin_mask)
+    def user_list(self):
+        return self.object_list()
 
 
 api.register(User, UserResource)

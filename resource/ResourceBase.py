@@ -8,17 +8,17 @@ class BaseRestResource(RestResource):
     url_manager = {}
 
     @classmethod
-    def route(cls, url, method=['GET']):
+    def route(cls, url, methods=['GET']):
         """route url mapping for resources
 
         :param url: url for visiting resources
-        :param method: a list containing allowed HTTP method
+        :param methods: a list containing allowed HTTP method
         :return:
         """
 
         def decorator(func):
             method_dict = cls.url_manager.setdefault(url, {})
-            method_dict.update({key: func for key in method})
+            method_dict.update({key: func for key in methods})
             return func
 
         return decorator
@@ -55,7 +55,8 @@ class BaseRestResource(RestResource):
     @staticmethod
     def rename(new_name):
         def decorator(func):
-            func.__name__ = new_name
+            # TODO need fixed
+            func.__name__ = new_name if new_name != '/list' else 'api_list'
             return func
 
         return decorator
