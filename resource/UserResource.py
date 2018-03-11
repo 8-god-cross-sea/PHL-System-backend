@@ -5,6 +5,7 @@ from api import api
 from flask import request, Response
 import json
 from flask_peewee.utils import make_password
+from flask_peewee.utils import get_object_or_404
 
 
 class UserResource(Rest):
@@ -43,6 +44,18 @@ class UserResource(Rest):
         except Exception as e:
             return Response(str(e), 400)
         return ret
+
+    @Rest.route('/<string:username>', ['POST', 'PUT'])
+    @Rest.permission()
+    def edit_user(self, username):
+        obj = get_object_or_404(self.get_query(), User.username == username)
+        return self.edit(obj)
+
+    @Rest.route('/<string:username>', ['DELETE'])
+    @Rest.permission()
+    def delete_user(self, username):
+        obj = get_object_or_404(self.get_query(), User.username == username)
+        return self.delete(obj)
 
     @Rest.route('/list')
     @Rest.permission(__user_admin_mask)
