@@ -14,14 +14,14 @@ class AccessControl:
 
     @classmethod
     def allow(cls, *args):
-        return cls.check_permission(lambda permission: any([to_check & permission for to_check in args]))
+        return cls._check_permission(lambda permission: any([to_check & permission for to_check in args]))
 
     @classmethod
     def at_least(cls, to_check):
-        return cls.check_permission(lambda permission: to_check < permission)
+        return cls._check_permission(lambda permission: to_check < permission)
 
     @classmethod
-    def check_permission(cls, check):
+    def _check_permission(cls, check):
         """
 
         :param to_check: an integer to check permission, each bit represents a role
@@ -32,9 +32,8 @@ class AccessControl:
             @functools.wraps(func)
             def wrapper(*args, **kwargs):
                 user = auth.get_logged_in_user()
-                if not user:
-                    return make_status_response('Login required', 101)
-                if check(user.permission):
+                permission = user.permission if user else 0
+                if check(permission):
                     return func(*args, **kwargs)
                 else:
                     return make_status_response('Not permitted', 101)
