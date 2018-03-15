@@ -1,7 +1,5 @@
 from flask_peewee.rest import RestResource
-from auth import auth
-from flask import request, Response
-import functools
+from flask import request
 
 
 class BaseRestResource(RestResource):
@@ -20,27 +18,6 @@ class BaseRestResource(RestResource):
             method_dict = cls.url_manager.setdefault(url, {})
             method_dict.update({key: func for key in methods})
             return func
-
-        return decorator
-
-    @classmethod
-    def permission(cls, mod=0):
-        """set control permission for the specific resources
-
-        :param mod: an integer indicates permission
-        :return: decorator
-        """
-
-        def decorator(func):
-            @functools.wraps(func)
-            def wrapper(*args, **kwargs):
-                user = auth.get_logged_in_user()
-                if user and (not mod or mod & user.permission):
-                    return func(*args, **kwargs)
-                else:
-                    return Response('Forbidden', 403)
-
-            return wrapper
 
         return decorator
 
