@@ -17,7 +17,7 @@ install:
 before_install: 
 
 script:
-  - python Tests/dummy_Test.py
+  - python Run_Unit_Test.py
 
 before_deploy: 
 
