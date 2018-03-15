@@ -21,6 +21,9 @@ class APIRestResource(Rest):
             Access.allow(query_mask)(APIRestResource.api_list))
         super().__init__(rest_api, model, authentication, allowed_methods)
 
+    def get_api_name(self):
+        return self.model.__name__.lower()
+
     def create_obj(self):
         try:
             ret = self.create()

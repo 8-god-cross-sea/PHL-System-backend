@@ -21,9 +21,6 @@ class UserResource(APIRestResource):
                          get_mask=Access.admin,
                          query_mask=Access.admin)
 
-    def get_api_name(self):
-        return 'user'
-
     @Rest.route('/login', ['POST'])
     def login(self):
         username = request.form['username']
