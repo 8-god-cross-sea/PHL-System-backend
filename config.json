@@ -4,5 +4,6 @@
     "engine": "peewee.SqliteDatabase"
   },
   "SECRET_KEY": "a secret key should be put here",
+  "CORS_SUPPORTS_CREDENTIALS": true,
   "DEBUG": true
 }
