@@ -38,7 +38,7 @@ class AccessControl:
                 if check(permission):
                     return func(*args, **kwargs)
                 else:
-                    return make_status_response('Not permitted', 101)
+                    return make_status_response('Not permitted', 101, 403)
 
             return wrapper
 

@@ -1,13 +1,15 @@
-from .ResourceBase import BaseRestResource as Rest
-from .ResponseManager import make_status_response
-from .APIRestResource import APIRestResource
-from .AccessControl import AccessControl as Access
+import json
+
+from flask import request
+from flask_peewee.utils import make_password
+
+from api import api
 from auth import auth
 from models import User
-from api import api
-from flask import request
-import json
-from flask_peewee.utils import make_password
+from .APIRestResource import APIRestResource
+from .AccessControl import AccessControl as Access
+from .ResourceBase import BaseRestResource as Rest
+from .ResponseManager import make_status_response
 
 
 class UserResource(APIRestResource):
@@ -28,14 +30,14 @@ class UserResource(APIRestResource):
         user = auth.authenticate(username, password)
         if user:
             auth.login_user(user)
-            return make_status_response('login success', 0)
+            return make_status_response('login success', 0, 200)
         else:
-            return make_status_response('incorrect username or password', 101)
+            return make_status_response('incorrect username or password', 101, 202)
 
     @Rest.route('/logout')
     def logout(self):
         auth.logout_user()
-        return make_status_response('You are now logged out', 0)
+        return make_status_response('You are now logged out', 0, 200)
 
     @Rest.route('/')
     @Access.allow(Access.user)
