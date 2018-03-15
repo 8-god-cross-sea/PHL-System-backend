@@ -13,11 +13,18 @@ from flask_peewee.utils import make_password
 class UserResource(APIRestResource):
     exclude = ('password', 'permission')
 
+    def __init__(self, rest_api, model, authentication, allowed_methods=None):
+        super().__init__(rest_api, model, authentication, allowed_methods,
+                         create_mask=Access.admin,
+                         delete_mask=Access.admin,
+                         edit_mask=Access.admin,
+                         get_mask=Access.admin,
+                         query_mask=Access.admin)
+
     def get_api_name(self):
         return 'user'
 
     @Rest.route('/login', ['POST'])
-    @Access.allow(Access.everyone)
     def login(self):
         username = request.form['username']
         password = request.form['password']

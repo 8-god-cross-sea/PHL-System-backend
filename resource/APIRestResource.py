@@ -5,14 +5,22 @@ from flask_peewee.utils import get_object_or_404
 
 
 class APIRestResource(Rest):
-    __create_mask = Access.user
-    __delete_mask = Access.user
-    __edit_mask = Access.user
-    __single_mask = Access.user
-    __query_mask = Access.user
 
-    @Rest.route('/', ['POST', 'PUT'])
-    @Access.allow(__create_mask)
+    def __init__(self, rest_api, model, authentication, allowed_methods=None, create_mask=Access.user,
+                 delete_mask=Access.user, edit_mask=Access.user,
+                 get_mask=Access.user, query_mask=Access.user):
+        APIRestResource.create_obj = Rest.route('/', ['POST', 'PUT'])(
+            Access.allow(create_mask)(APIRestResource.create_obj))
+        APIRestResource.get_obj = Rest.route('/<pk>', ['GET'])(
+            Access.allow(get_mask)(APIRestResource.get_obj))
+        APIRestResource.edit_obj = Rest.route('/<pk>', ['POST', 'PUT'])(
+            Access.allow(edit_mask)(APIRestResource.edit_obj))
+        APIRestResource.delete_obj = Rest.route('/<pk>', ['DELETE'])(
+            Access.allow(delete_mask)(APIRestResource.delete_obj))
+        APIRestResource.api_list = Rest.route('/list')(
+            Access.allow(query_mask)(APIRestResource.api_list))
+        super().__init__(rest_api, model, authentication, allowed_methods)
+
     def create_obj(self):
         try:
             ret = self.create()
@@ -20,25 +28,17 @@ class APIRestResource(Rest):
             return Response(str(e), 400)
         return ret
 
-    @Rest.route('/<pk>', ['GET'])
-    @Access.allow(__single_mask)
-    def edit_obj(self, pk):
+    def get_obj(self, pk):
         obj = get_object_or_404(self.get_query(), self.pk == pk)
         return self.object_detail(obj)
 
-    @Rest.route('/<pk>', ['POST', 'PUT'])
-    @Access.allow(__delete_mask)
     def edit_obj(self, pk):
         obj = get_object_or_404(self.get_query(), self.pk == pk)
         return self.edit(obj)
 
-    @Rest.route('/<pk>', ['DELETE'])
-    @Access.allow(__edit_mask)
     def delete_obj(self, pk):
         obj = get_object_or_404(self.get_query(), self.pk == pk)
         return self.delete(obj)
 
-    @Rest.route('/list')
-    @Access.allow(__query_mask)
     def api_list(self):
         return self.object_list()
