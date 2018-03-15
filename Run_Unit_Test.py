@@ -6,7 +6,7 @@ def all_case():
     discover = unittest.defaultTestLoader.discover(case_path,
                                                    pattern="*.py",
                                                    top_level_dir=None)
-    print(discover)
+    #print(discover)
     return discover
 
 if __name__=="__main__":
