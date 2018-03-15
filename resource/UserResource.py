@@ -1,22 +1,23 @@
 from .ResourceBase import BaseRestResource as Rest
 from .ResponseManager import make_status_response
+from .APIRestResource import APIRestResource
+from .AccessControl import AccessControl as Access
 from auth import auth
 from models import User
 from api import api
-from flask import request, Response
+from flask import request
 import json
 from flask_peewee.utils import make_password
-from flask_peewee.utils import get_object_or_404
 
 
-class UserResource(Rest):
+class UserResource(APIRestResource):
     exclude = ('password', 'permission')
-    __user_admin_mask = int('10000', 2)
 
     def get_api_name(self):
         return 'user'
 
     @Rest.route('/login', ['POST'])
+    @Access.allow(Access.everyone)
     def login(self):
         username = request.form['username']
         password = request.form['password']
@@ -33,35 +34,9 @@ class UserResource(Rest):
         return make_status_response('You are now logged out', 0)
 
     @Rest.route('/')
-    @Rest.permission()
+    @Access.allow(Access.user)
     def user_detail(self):
         return self.object_detail(auth.get_logged_in_user())
-
-    @Rest.route('/', ['POST', 'PUT'])
-    @Rest.permission(__user_admin_mask)
-    def create_user(self):
-        try:
-            ret = self.create()
-        except Exception as e:
-            return Response(str(e), 400)
-        return ret
-
-    @Rest.route('/<string:username>', ['POST', 'PUT'])
-    @Rest.permission()
-    def edit_user(self, username):
-        obj = get_object_or_404(self.get_query(), User.username == username)
-        return self.edit(obj)
-
-    @Rest.route('/<string:username>', ['DELETE'])
-    @Rest.permission(__user_admin_mask)
-    def delete_user(self, username):
-        obj = get_object_or_404(self.get_query(), User.username == username)
-        return self.delete(obj)
-
-    @Rest.route('/list')
-    @Rest.permission(__user_admin_mask)
-    def api_list(self):
-        return self.object_list()
 
     def read_request_data(self):
         """

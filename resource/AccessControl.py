@@ -14,11 +14,12 @@ class AccessControl:
 
     @classmethod
     def allow(cls, *args):
-        return cls._check_permission(lambda permission: any([to_check & permission for to_check in args]))
+        return cls._check_permission(
+            lambda permission: (0 in args) or any([to_check & permission for to_check in args]))
 
     @classmethod
     def at_least(cls, to_check):
-        return cls._check_permission(lambda permission: to_check < permission)
+        return cls._check_permission(lambda permission: to_check <= permission)
 
     @classmethod
     def _check_permission(cls, check):
@@ -28,6 +29,7 @@ class AccessControl:
         :param check: a function to check the permission, return true if ok. (to_check, user_vector) -> bool
         :return: a decorator wraps request handler function and do the access control before calling the handler
         """
+
         def decorator(func):
             @functools.wraps(func)
             def wrapper(*args, **kwargs):
@@ -39,4 +41,5 @@ class AccessControl:
                     return make_status_response('Not permitted', 101)
 
             return wrapper
+
         return decorator
