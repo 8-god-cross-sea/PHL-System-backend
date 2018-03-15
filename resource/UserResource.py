@@ -1,4 +1,5 @@
 from .ResourceBase import BaseRestResource as Rest
+from .ResponseManager import make_status_response
 from auth import auth
 from models import User
 from api import api
@@ -22,14 +23,14 @@ class UserResource(Rest):
         user = auth.authenticate(username, password)
         if user:
             auth.login_user(user)
-            return self.response({'status': 'login success', 'ret_code': 0})
+            return make_status_response('login success', 0)
         else:
-            return self.response({'status': 'incorrect username or password', 'ret_code': 101})
+            return make_status_response('incorrect username or password', 101)
 
     @Rest.route('/logout')
     def logout(self):
         auth.logout_user()
-        return Response('You are now logged out')
+        return make_status_response('You are now logged out', 0)
 
     @Rest.route('/')
     @Rest.permission()
@@ -37,7 +38,7 @@ class UserResource(Rest):
         return self.object_detail(auth.get_logged_in_user())
 
     @Rest.route('/', ['POST', 'PUT'])
-    @Rest.permission()
+    @Rest.permission(__user_admin_mask)
     def create_user(self):
         try:
             ret = self.create()
@@ -52,7 +53,7 @@ class UserResource(Rest):
         return self.edit(obj)
 
     @Rest.route('/<string:username>', ['DELETE'])
-    @Rest.permission()
+    @Rest.permission(__user_admin_mask)
     def delete_user(self, username):
         obj = get_object_or_404(self.get_query(), User.username == username)
         return self.delete(obj)
