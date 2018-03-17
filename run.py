@@ -1,7 +1,7 @@
-from app import app
-from resource import api
-
-api.setup()
+from phl_app import app
+import api
 
 if __name__ == '__main__':
-    app.run()
+    api.setup(app)
+    app.run(debug=False)
+

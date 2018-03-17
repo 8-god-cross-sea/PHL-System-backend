@@ -1,5 +1,5 @@
-from .ResourceBase import BaseRestResource as Rest
-from .AccessControl import AccessControl as Access
+from .base_resource import BaseRestResource as Rest
+from .access_control import AccessControl as Access
 from flask import Response
 from flask_peewee.utils import get_object_or_404
 

@@ -3,13 +3,11 @@ import json
 from flask import request
 from flask_peewee.utils import make_password
 
-from api import api
-from auth import auth
-from models import User
-from .APIRestResource import APIRestResource
-from .AccessControl import AccessControl as Access
-from .ResourceBase import BaseRestResource as Rest
-from .ResponseManager import make_status_response
+from api.access_control import auth
+from api.api_rest_resource import APIRestResource
+from api.access_control import AccessControl as Access
+from api.base_resource import BaseRestResource as Rest
+from api.response_utils import make_status_response
 
 
 class UserResource(APIRestResource):
@@ -54,6 +52,3 @@ class UserResource(APIRestResource):
         if password:
             dt['password'] = make_password(password)
         return dt
-
-
-api.register(User, UserResource)

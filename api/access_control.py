@@ -1,7 +1,12 @@
 import functools
 
-from auth import auth
-from .ResponseManager import make_status_response
+from flask_peewee.auth import Auth
+import phl_app
+from model import db
+from model.user import User
+from .response_utils import make_status_response
+
+auth = Auth(phl_app.app, db, user_model=User)
 
 
 class AccessControl:
