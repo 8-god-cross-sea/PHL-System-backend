@@ -1,24 +1,21 @@
+import os
 import unittest
-import tempfile
 import functools
 
 
 class TestCaseWithLoginSupport(unittest.TestCase):
+    """
+    Support login & logout for test cases
+    """
     test_client = None
 
     @classmethod
     def setUpClass(cls):
-        from phl_app import app
-        app.testing = True
-        app.config['DATABASE']['name'] = tempfile.NamedTemporaryFile().name
-
-        from utils.manage import init_db
-        init_db()
-
-        import api
-        api.setup(app)
-
+        from app import app
         cls.test_client = app.test_client()
+
+        from manage import init_db
+        init_db()
 
     @classmethod
     def login(cls, username, password):

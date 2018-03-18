@@ -1,7 +1,7 @@
 import unittest
 import json
 
-from api_test import TestCaseWithLoginSupport
+from tests import TestCaseWithLoginSupport
 
 
 class UserApiTestCase(TestCaseWithLoginSupport):

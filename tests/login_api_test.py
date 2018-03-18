@@ -1,7 +1,7 @@
 import unittest
 
-from api_test import TestCaseWithLoginSupport
-from utils import response_manager
+from tests import TestCaseWithLoginSupport
+from app.utils import response_manager
 
 
 class LoginApiTestCase(TestCaseWithLoginSupport):

@@ -1,12 +1,5 @@
 [[source]]
 
-url = "https://pypi.python.org/simple"
-verify_ssl = true
-name = "pypi"
-
-
-[[source]]
-
 url = "http://mirrors.aliyun.com/pypi/simple"
 verify_ssl = false
 name = "ali_mirror"
@@ -22,6 +15,8 @@ wtf-peewee = "*"
 flask-peewee = "*"
 flask-cors = "*"
 flask = "*"
+flask-script = "*"
+gunicorn = "*"
 
 
 [dev-packages]
