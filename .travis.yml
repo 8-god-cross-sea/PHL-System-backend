@@ -13,12 +13,13 @@ notifications:
   on_failure: always
 
 install:
-  - pip install -r requirements.txt
+  - pip install pipenv
+  - pipenv install --dev
 before_install: 
 
 script:
-  - python -W ignore::DeprecationWarning -m unittest -v api_test/login_api_test.py
-  - python -W ignore::DeprecationWarning -m unittest -v api_test/user_api_test.py
+  - pipenv run python -W ignore::DeprecationWarning -m unittest -v api_test/login_api_test.py
+  - pipenv run python -W ignore::DeprecationWarning -m unittest -v api_test/user_api_test.py
 
 before_deploy: 
 
