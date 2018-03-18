@@ -7,7 +7,7 @@ from api.access_control import auth
 from api.api_rest_resource import APIRestResource
 from api.access_control import AccessControl as Access
 from api.base_resource import BaseRestResource as Rest
-from api.response_utils import make_status_response
+from utils import response_manager
 
 
 class UserResource(APIRestResource):
@@ -28,14 +28,14 @@ class UserResource(APIRestResource):
         user = auth.authenticate(username, password)
         if user:
             auth.login_user(user)
-            return make_status_response('login success', 0, 200)
+            return response_manager.LOGIN_SUCCESS_RESPONSE
         else:
-            return make_status_response('incorrect username or password', 101, 202)
+            return response_manager.LOGIN_FAILED_RESPONSE
 
     @Rest.route('/logout')
     def logout(self):
         auth.logout_user()
-        return make_status_response('You are now logged out', 0, 200)
+        return response_manager.LOGOUT_SUCCESS_RESPONSE
 
     @Rest.route('/')
     @Access.allow(Access.user)

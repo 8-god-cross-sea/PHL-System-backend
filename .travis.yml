@@ -17,7 +17,8 @@ install:
 before_install: 
 
 script:
-  - python Run_Unit_Test.py
+  - python -W ignore::DeprecationWarning -m unittest -v api_test/login_api_test.py
+  - python -W ignore::DeprecationWarning -m unittest -v api_test/user_api_test.py
 
 before_deploy: 
 

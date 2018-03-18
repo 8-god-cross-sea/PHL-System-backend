@@ -4,7 +4,7 @@ from flask_peewee.auth import Auth
 import phl_app
 from model import db
 from model.user import User
-from .response_utils import make_status_response
+from utils import response_manager
 
 auth = Auth(phl_app.app, db, user_model=User)
 
@@ -43,7 +43,7 @@ class AccessControl:
                 if check(permission):
                     return func(*args, **kwargs)
                 else:
-                    return make_status_response('Not permitted', 101, 403)
+                    return response_manager.NOT_PERMITTED_RESPONSE
 
             return wrapper
 
