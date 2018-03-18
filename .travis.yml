@@ -19,8 +19,8 @@ before_install:
 
 script:
   - export APP_SETTINGS=app.config.TestingConfig
-  - pipenv run python -W ignore::DeprecationWarning -m unittest -v api_test/login_api_test.py
-  - pipenv run python -W ignore::DeprecationWarning -m unittest -v api_test/user_api_test.py
+  - pipenv run python -W ignore::DeprecationWarning -m unittest -v tests/login_api_test.py
+  - pipenv run python -W ignore::DeprecationWarning -m unittest -v tests/user_api_test.py
 
 before_deploy: 
 
