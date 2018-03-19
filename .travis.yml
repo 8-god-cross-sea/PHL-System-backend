@@ -21,7 +21,7 @@ script:
   - export APP_SETTINGS=app.config.TestingConfig
   #- pipenv run python -W ignore::DeprecationWarning -m unittest -v tests/login_api_test.py
   #- pipenv run python -W ignore::DeprecationWarning -m unittest -v tests/user_api_test.py
-  - pipenv run nosetests tests\ --with-coverage --cover-package=app
+  - pipenv run nosetests tests --with-coverage --cover-package=app
 after_success:
   - coveralls
 
