@@ -17,6 +17,10 @@ flask-cors = "*"
 flask = "*"
 flask-script = "*"
 gunicorn = "*"
+coverage = "*"
+nose = "*"
+python-coveralls = "*"
+
 
 
 [dev-packages]
