@@ -1,30 +1,30 @@
 sudo: enabled
-
 language: python
-
 python:
   - 3.6
 
 notifications:
   email:
     recipients:
-      
+
   on_success: never
   on_failure: always
 
 install:
   - pip install pipenv
   - pipenv install --dev
-before_install: 
 
 script:
   - export APP_SETTINGS=app.config.TestingConfig
-  #- pipenv run python -W ignore::DeprecationWarning -m unittest -v tests/login_api_test.py
-  #- pipenv run python -W ignore::DeprecationWarning -m unittest -v tests/user_api_test.py
   - pipenv run nosetests -w tests --with-coverage --cover-package=app
 after_success:
   - coveralls
 
-before_deploy: 
-
 deploy:
+  provider: heroku
+  app: frozen-retreat-73403
+  api_key:
+    secure: mK/1dQv585Kec/mmbolS+vD+ZuchNjN90PnJmlVjr6M6q4Y+yanOS1uWFjGQFghLiUkM8WqBjb+B4igPWpXpNGYuOyE55Y/n11VWc98h6Ob66zUCu7qEQGsRNldKV0qKO+VCAVgyX5+XqMPutqfXLWHjtZpO67omTXu6ctulPSHopqzXRkvrCD4bcCqmnt+4Pl2YaJgPkfTRi+nXsh73btp9y/Xw3LaNGRslJMFc8bcoJuA+miOA9lBQ9ikLiqkMSr2sRbvHrYL5AXUY6NffP9QIqntvsRub3Rlf64K9dJxMjJ2RhX+XMY3hmG1cy4ZTpsrk7NvF0a8FGP1dAmUIfiTy17WdIDDaydaD3GYObDxD2av/3Z179MV0zF8bl+e8NonuA3ARMSHWCx9Fowe18gMYfIvUusZSn+7jCyNENN9bZ59W3dY+Ljxw1eq19uWX2DyDZPYuWvrVIi1gnbb4l30k8Bgewzn1Z1VvkU2NeAj7DA8iLxy60IgUWb9ny61N7zoHQ6bZIifm6w/pSvPfoY1aHAiIFwxpS3RDNdjdooo3EPDOt3NNjHVUnVYQz2KEnO405I9bJDnh6Mm95jaqiVt+CrDyGHQ8xZOuJjGikfi/7BJmo6yKkrBNAYPKu8W6YIeo5gMFOBjEa3ji7X9xIe+mVWGcVgoE9KrxbScUQ+g=
+
+  run:
+    - "pipenv run python manage.py init_db"

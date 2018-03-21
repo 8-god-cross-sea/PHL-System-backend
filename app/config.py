@@ -39,3 +39,21 @@ class ProductionConfig(BaseConfig):
     Production application configuration
     """
     DEBUG = True
+
+
+class HerokuDeployConfig(BaseConfig):
+    """
+    Heroku deploy application config
+    """
+    DEBUG = True
+
+    # parse database url for flask_peewee
+    from urllib.parse import urlparse
+    url = urlparse(os.getenv('DATABASE_URL'))
+    DATABASE = {
+        'engine': 'peewee.PostgresqlDatabase',
+        'name': url.path[1:],
+        'password': url.password,
+        'host': url.hostname,
+        'port': url.port,
+    }

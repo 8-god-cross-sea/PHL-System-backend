@@ -20,7 +20,7 @@ gunicorn = "*"
 coverage = "*"
 nose = "*"
 python-coveralls = "*"
-
+"psycopg2-binary" = "*"
 
 
 [dev-packages]
