@@ -45,6 +45,9 @@ class BaseRestResource(RestResource):
         urls = []
         for key, dispatcher in self.url_manager.items():
             f = self.method_dispatcher(**dispatcher)
-            f = self.rename(next(iter(dispatcher.values())).__name__)(f)            # use first function name
+            f = self.rename(next(iter(dispatcher.values())).__name__)(f)  # use first function name
             urls.append((key, self.require_method(f, list(dispatcher.keys()))))
         return urls
+
+    def authorize(self, name):
+        return self.authentication.authorize(name)

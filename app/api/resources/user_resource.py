@@ -3,23 +3,20 @@ import json
 from flask import request
 from flask_peewee.utils import make_password
 
-from app.api.access_control import auth
+from app import auth
 from app.api.api_rest_resource import APIRestResource
-from app.api.access_control import AccessControl as Access
 from app.api.base_resource import BaseRestResource as Rest
 from app.utils import response_manager
+from app.api.auth.role_auth import RoleAuth
 
 
 class UserResource(APIRestResource):
     exclude = ('password', 'permission')
-
-    def __init__(self, rest_api, model, authentication, allowed_methods=None):
-        super().__init__(rest_api, model, authentication, allowed_methods,
-                         create_mask=Access.admin,
-                         delete_mask=Access.admin,
-                         edit_mask=Access.admin,
-                         get_mask=Access.admin,
-                         query_mask=Access.admin)
+    access_dict = {
+        'login': RoleAuth.EVERYONE,
+        'logout': RoleAuth.EVERYONE,
+        'user_detail': RoleAuth.ANY_USER
+    }
 
     @Rest.route('/login', ['POST'])
     def login(self):
@@ -37,8 +34,7 @@ class UserResource(APIRestResource):
         auth.logout_user()
         return response_manager.LOGOUT_SUCCESS_RESPONSE
 
-    @Rest.route('/')
-    @Access.at_least(Access.user)
+    @Rest.route('/me')
     def user_detail(self):
         return self.object_detail(auth.get_logged_in_user())
 
