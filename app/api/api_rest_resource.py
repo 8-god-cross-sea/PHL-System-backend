@@ -7,6 +7,10 @@ class APIRestResource(Rest):
     def get_api_name(self):
         return self.model.__name__.lower()
 
+    @Rest.route('/')
+    def api_list(self):
+        return self.object_list()
+
     @Rest.route('/', ['POST', ' PUT'])
     def root(self):
         try:
@@ -30,6 +34,6 @@ class APIRestResource(Rest):
         obj = get_object_or_404(self.get_query(), self.pk == pk)
         return self.delete(obj)
 
-    @Rest.route('/list')
+    @Rest.route('/')
     def api_list(self):
         return self.object_list()

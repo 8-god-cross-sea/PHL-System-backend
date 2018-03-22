@@ -20,8 +20,8 @@ class UserResource(APIRestResource):
 
     @Rest.route('/login', ['POST'])
     def login(self):
-        username = request.form['username']
-        password = request.form['password']
+        username = request.json['username']
+        password = request.json['password']
         user = auth.authenticate(username, password)
         if user:
             auth.login_user(user)
