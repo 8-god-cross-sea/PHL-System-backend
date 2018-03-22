@@ -1,31 +1,25 @@
 sudo: enabled
 language: python
 python:
-  - 3.6
+- 3.6
 cache: pip
-
 notifications:
   email:
-    recipients:
-
+    recipients: 
   on_success: never
   on_failure: always
-
 install:
-  - pip install pipenv
-  - pipenv install --dev
-
+- pip install pipenv
+- pipenv install --dev
 script:
-  - export APP_SETTINGS=app.config.TestingConfig
-  - pipenv run nosetests -w tests --with-coverage --cover-package=app
+- export APP_SETTINGS=app.config.TestingConfig
+- pipenv run nosetests -w tests --with-coverage --cover-package=app
 after_success:
-  - coveralls
-
+- coveralls
 deploy:
   provider: heroku
   app: frozen-retreat-73403
   api_key:
-    secure: mK/1dQv585Kec/mmbolS+vD+ZuchNjN90PnJmlVjr6M6q4Y+yanOS1uWFjGQFghLiUkM8WqBjb+B4igPWpXpNGYuOyE55Y/n11VWc98h6Ob66zUCu7qEQGsRNldKV0qKO+VCAVgyX5+XqMPutqfXLWHjtZpO67omTXu6ctulPSHopqzXRkvrCD4bcCqmnt+4Pl2YaJgPkfTRi+nXsh73btp9y/Xw3LaNGRslJMFc8bcoJuA+miOA9lBQ9ikLiqkMSr2sRbvHrYL5AXUY6NffP9QIqntvsRub3Rlf64K9dJxMjJ2RhX+XMY3hmG1cy4ZTpsrk7NvF0a8FGP1dAmUIfiTy17WdIDDaydaD3GYObDxD2av/3Z179MV0zF8bl+e8NonuA3ARMSHWCx9Fowe18gMYfIvUusZSn+7jCyNENN9bZ59W3dY+Ljxw1eq19uWX2DyDZPYuWvrVIi1gnbb4l30k8Bgewzn1Z1VvkU2NeAj7DA8iLxy60IgUWb9ny61N7zoHQ6bZIifm6w/pSvPfoY1aHAiIFwxpS3RDNdjdooo3EPDOt3NNjHVUnVYQz2KEnO405I9bJDnh6Mm95jaqiVt+CrDyGHQ8xZOuJjGikfi/7BJmo6yKkrBNAYPKu8W6YIeo5gMFOBjEa3ji7X9xIe+mVWGcVgoE9KrxbScUQ+g=
-
+    secure: nlW1EMjBtnNIlidxuGg62mm7nTaO0Osq3eojwFJp0hz3/LcVxgDhhALxAE+8+7lDaQ240DLFM/ranrmntzF8GtVSHu7717axO5iGqBKToVrtNeeVEkNxkuv21HfneVNT7UIsy6HGoarH2uEpzT9pxEXVSS4rfnUM+UEuQGQPzaf8HLTnIfVdB1HB/YO/6cN/pgBID/59P3hhQdrj6YmPND2IkYMEUCR5cdNSPC779JbgiTx/zcUIUuWrsZ/aDEmXvtjgrMnDORM8gsjwLQFfrs1uC/pCTD+P6rjQ4FUlzSkRHi43KSg0kbBlJzf+s+OQ5SK7jrSxTg4rLFQkq9kyIaW8cQXS39sAuaIYij3B6W3WyGsuHNKbEwWsaRiysLDbhZO7OWZ+w1l+B+YUtA47O/RvqCHesBrqhWZIdnPv5z2KVoLGQWZSd47Uu8FonRHsrjMpQGAJNjM6o9lYgg9Ti6AJ0tBTeVNqkiRDWfI83/7E7nLwJ5XqqcmCwb2y1O9qa3WoSNMSOoKwRNALFyncUQnf2j3NsXCUVd7NbH9FCcz6OpkXsvLbiOJ2aRKZnXw36TrHKUaNi1bYV+NINzfbZUfW1mCc/7H2q+kyF5lxMm5dPBm0M9Wfaq8Ni9jIVecwULNli39sf2310RwjQ9WnUu7yp7D+08+ypyAJi5ul2NQ=
   run:
-    - "pipenv run python manage.py init_db"
+  - pipenv run python manage.py init_db
