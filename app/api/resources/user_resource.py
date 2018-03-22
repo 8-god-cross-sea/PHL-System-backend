@@ -38,7 +38,7 @@ class UserResource(APIRestResource):
         return response_manager.LOGOUT_SUCCESS_RESPONSE
 
     @Rest.route('/')
-    @Access.allow(Access.user)
+    @Access.at_least(Access.user)
     def user_detail(self):
         return self.object_detail(auth.get_logged_in_user())
 
