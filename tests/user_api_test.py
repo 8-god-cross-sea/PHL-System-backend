@@ -1,22 +1,31 @@
 import unittest
-import json
 
-from tests import TestCaseWithLoginSupport
+from tests import ResourceTestCase
+from app.model.user import User
 
 
-class UserApiTestCase(TestCaseWithLoginSupport):
-    login_in_as = TestCaseWithLoginSupport.login_in_as
+class UserResourceTestCast(ResourceTestCase):
 
-    @login_in_as(username='admin', password='admin')
-    def test_user_detail(self):
-        recv = self.test_client.get('/api/user/1')
-        self.assertEqual(recv.status_code, 200)
+    def __init__(self, method_name='runTest'):
+        super(UserResourceTestCast, self).__init__(method_name)
+        self.api_url = '/api/user/'
+        self.model = User
+        self.data = dict(
+            username='test_user',
+            password='test_password',
+            email='test@test.com',
+            permission=0b10000
+        )
+        self.updated = dict(
+            username='test_update_user',
+            password='test_password',
+            email='test_update@test.com',
+            permission=0b10000
+        )
+        self.fields = ['username', 'email']
 
-        data = json.loads(next(recv.response).decode('utf-8'))
-        self.assertEqual(data['id'], 1)
-        self.assertEqual(data['username'], 'admin')
-        self.assertEqual(data['email'], 'admin@admin.com')
-        self.assertEqual(data['active'], True)
+    def test_basic_operations(self):
+        self.basic_operations()
 
 
 if __name__ == '__main__':
