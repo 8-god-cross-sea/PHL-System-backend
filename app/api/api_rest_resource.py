@@ -1,6 +1,7 @@
-from .base_resource import BaseRestResource as Rest
-from flask import Response
 from flask_peewee.utils import get_object_or_404
+
+from app.utils import response_manager
+from .base_resource import BaseRestResource as Rest
 
 
 class APIRestResource(Rest):
@@ -16,7 +17,7 @@ class APIRestResource(Rest):
         try:
             ret = self.create()
         except Exception as e:
-            return Response(str(e), 400)
+            return response_manager.make_bad_request_response(str(e))
         return ret
 
     @Rest.route('/<pk>', ['GET'])
@@ -33,7 +34,3 @@ class APIRestResource(Rest):
     def delete_obj(self, pk):
         obj = get_object_or_404(self.get_query(), self.pk == pk)
         return self.delete(obj)
-
-    @Rest.route('/')
-    def api_list(self):
-        return self.object_list()

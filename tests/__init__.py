@@ -1,11 +1,9 @@
+import functools
 import json
 import unittest
-import functools
-
-from app.utils import response_manager
 
 
-class TestCaseWithLoginSupport(unittest.TestCase):
+class TestCaseWithLoginSupport(object):
     """
     Support login & logout for test cases
     """
@@ -32,13 +30,13 @@ class TestCaseWithLoginSupport(unittest.TestCase):
 
     @classmethod
     def login_in_as(cls, username, password):
-
         def _(func):
             @functools.wraps(func)
             def wrap_login_logout(self, *args, **kwargs):
                 self.login(username=username, password=password)
                 func(self, *args, **kwargs)
                 self.logout()
+
             return wrap_login_logout
 
         return _
@@ -55,19 +53,23 @@ class ResourceTestCase(TestCaseWithLoginSupport):
         self.updated = None
         self.fields = None
 
-    def check_result(self, expect, actual):
+    def check_result(self, expect, response):
+        data = self.extract_data(response)
         for field in self.fields:
-            self.assertEqual(expect[field], actual[field])
+            self.assertEqual(expect[field], data[field])
 
     def check_status(self, response, status=200):
         self.assertEqual(response.status_code, status)
 
+    def check_response(self, response, expect):
+        self.assertEqual(response.data, expect.data)
+
     @staticmethod
-    def get_data(response):
+    def extract_data(response):
         return json.loads(response.data.decode('utf-8'))
 
-    def get(self, id):
-        return self.test_client.get(self.api_url + str(id))
+    def get(self, pk):
+        return self.test_client.get(self.api_url + str(pk))
 
     def get_list(self):
         return self.test_client.get(self.api_url)
@@ -75,47 +77,47 @@ class ResourceTestCase(TestCaseWithLoginSupport):
     def create(self, data):
         return self.test_client.post(self.api_url, data=json.dumps(data))
 
-    def update(self, id, data):
-        return self.test_client.put(self.api_url + str(id), data=json.dumps(data))
+    def update(self, pk, data):
+        return self.test_client.put(self.api_url + str(pk), data=json.dumps(data))
 
-    def delete(self, id):
-        return self.test_client.delete(self.api_url + str(id))
+    def delete(self, pk):
+        return self.test_client.delete(self.api_url + str(pk))
 
     @login_as(username='admin', password='admin')
-    def basic_operations(self):
-
+    def test_curd_operations(self):
         # test create
         response = self.create(data=self.data)
         self.check_status(response)
-        data = self.get_data(response)
-        self.check_result(self.data, data)
+        self.check_result(self.data, response)
 
-        # store the id of created object
-        id = data['id']
+        # store the pk of created object
+        pk = self.extract_data(response)['id']
 
         # test get list
         response = self.get_list()
         self.check_status(response)
-        data = self.get_data(response)
-        self.assertTrue(any([obj['id'] == id for obj in data['objects']]))
+        list_data = self.extract_data(response)
+        self.assertTrue(any([obj['id'] == pk for obj in list_data['objects']]))
+
+        # test get before delete
+        response = self.get(pk)
+        self.check_status(response)
+        self.check_result(self.data, response)
 
         # test update
-        response = self.update(id, self.updated)
+        response = self.update(pk, self.updated)
         self.check_status(response)
-        data = self.get_data(response)
-        self.check_result(self.updated, data)
+        self.check_result(self.updated, response)
 
         # test delete
-        response = self.delete(id)
+        response = self.delete(pk)
         self.check_status(response)
 
-        # test get
-        response = self.get(id)
+        # test get after delete
+        response = self.get(pk)
         self.check_status(response, 404)
 
-
-
-
-
-
-
+    @login_as('admin', 'admin')
+    def test_bad_create(self):
+        response = self.create({})
+        self.check_status(response, 400)

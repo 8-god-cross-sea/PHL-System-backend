@@ -1,10 +1,11 @@
 import unittest
 
-from tests import ResourceTestCase
 from app.model.user import User
+from app.utils import response_manager
+from tests import ResourceTestCase
 
 
-class UserResourceTestCast(ResourceTestCase):
+class UserResourceTestCast(ResourceTestCase, unittest.TestCase):
 
     def __init__(self, method_name='runTest'):
         super(UserResourceTestCast, self).__init__(method_name)
@@ -24,8 +25,22 @@ class UserResourceTestCast(ResourceTestCase):
         )
         self.fields = ['username', 'email']
 
-    def test_basic_operations(self):
-        self.basic_operations()
+    def test_login_success(self):
+        response = self.login('admin', 'admin')
+        self.check_response(response, response_manager.LOGIN_SUCCESS_RESPONSE)
+
+    def test_login_failed(self):
+        response = self.login('admin', 'wrong_password')
+        self.check_response(response, response_manager.LOGIN_FAILED_RESPONSE)
+
+    def test_logout(self):
+        response = self.logout()
+        self.check_response(response, response_manager.LOGOUT_SUCCESS_RESPONSE)
+
+    @ResourceTestCase.login_as('user', 'user')
+    def test_me(self):
+        response = self.test_client.get(self.api_url + 'me')
+        self.check_status(response)
 
 
 if __name__ == '__main__':

@@ -11,4 +11,4 @@ class User(db.Model, BaseUser):
     email = CharField()
     join_date = DateTimeField(default=datetime.datetime.now)
     active = BooleanField(default=True)
-    permission = IntegerField(default=0)
+    permission = IntegerField(default=1)

@@ -8,6 +8,10 @@ def make_status_response(status_message, status_code, http_response_code=200):
     return Response(json.dumps(res), mimetype='application/json', status=http_response_code)
 
 
+def make_bad_request_response(status_message):
+    return make_status_response(status_message, 101, 400)
+
+
 NOT_PERMITTED_RESPONSE = make_status_response('Not permitted', 101, 403)
 LOGIN_SUCCESS_RESPONSE = make_status_response('login success', 0, 200)
 LOGIN_FAILED_RESPONSE = make_status_response('incorrect username or password', 101, 202)
