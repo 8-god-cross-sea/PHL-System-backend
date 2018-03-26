@@ -1,10 +1,13 @@
 from flask_peewee.utils import get_object_or_404
 
+from app.api.auth.role_auth import RoleAuth
 from app.utils import response_manager
 from .base_resource import BaseRestResource as Rest
 
 
 class APIRestResource(Rest):
+    default_access = RoleAuth.EVERYONE
+
     def get_api_name(self):
         return self.model.__name__.lower()
 

@@ -5,13 +5,15 @@ from flask_peewee.utils import make_password
 
 from app import auth
 from app.api.api_rest_resource import APIRestResource
+from app.api.auth.role_auth import RoleAuth
 from app.api.base_resource import BaseRestResource as Rest
 from app.utils import response_manager
-from app.api.auth.role_auth import RoleAuth
 
 
 class UserResource(APIRestResource):
     exclude = ('password', 'permission')
+    default_access = RoleAuth.ADMIN
+
     access_dict = {
         'login': RoleAuth.EVERYONE,
         'logout': RoleAuth.EVERYONE,

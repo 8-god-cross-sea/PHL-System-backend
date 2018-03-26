@@ -42,6 +42,10 @@ class UserResourceTestCast(ResourceTestCase, unittest.TestCase):
         response = self.test_client.get(self.api_url + 'me')
         self.check_status(response)
 
+    def test_me_with_lacking_permission(self):
+        response = self.test_client.get(self.api_url + 'me')
+        self.check_status(response, 403)
+
 
 if __name__ == '__main__':
     unittest.main()
