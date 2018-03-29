@@ -38,6 +38,14 @@ class ProductionConfig(BaseConfig):
     Production application configuration
     """
     DEBUG = True
+    DATABASE = {
+        'engine': 'peewee.PostgresqlDatabase',
+        'name': 'phl',
+        'user': 'postgres',
+        'password': 'hh',
+        'host': '127.0.0.1',
+        'port': 5432,
+    }
 
 
 class HerokuDeployConfig(BaseConfig):
