@@ -27,6 +27,8 @@ def init_db():
     Assay.create(patient=patient, wbc=9.4, rbc=5.1, plt=300)
     Medicine.create(name='阿司匹林', price=21.3, count=140)
 
+    print('db init finished')
+
 
 if __name__ == '__main__':
     manager.run()
