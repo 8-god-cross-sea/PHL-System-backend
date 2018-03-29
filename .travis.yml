@@ -16,10 +16,10 @@ script:
 - pipenv run nosetests -w tests --with-coverage --cover-package=app
 after_success:
 - coveralls
-#deploy:
-  #provider: heroku
-  #app: frozen-retreat-73403
-  #api_key:
-    #secure: nlW1EMjBtnNIlidxuGg62mm7nTaO0Osq3eojwFJp0hz3/LcVxgDhhALxAE+8+7lDaQ240DLFM/ranrmntzF8GtVSHu7717axO5iGqBKToVrtNeeVEkNxkuv21HfneVNT7UIsy6HGoarH2uEpzT9pxEXVSS4rfnUM+UEuQGQPzaf8HLTnIfVdB1HB/YO/6cN/pgBID/59P3hhQdrj6YmPND2IkYMEUCR5cdNSPC779JbgiTx/zcUIUuWrsZ/aDEmXvtjgrMnDORM8gsjwLQFfrs1uC/pCTD+P6rjQ4FUlzSkRHi43KSg0kbBlJzf+s+OQ5SK7jrSxTg4rLFQkq9kyIaW8cQXS39sAuaIYij3B6W3WyGsuHNKbEwWsaRiysLDbhZO7OWZ+w1l+B+YUtA47O/RvqCHesBrqhWZIdnPv5z2KVoLGQWZSd47Uu8FonRHsrjMpQGAJNjM6o9lYgg9Ti6AJ0tBTeVNqkiRDWfI83/7E7nLwJ5XqqcmCwb2y1O9qa3WoSNMSOoKwRNALFyncUQnf2j3NsXCUVd7NbH9FCcz6OpkXsvLbiOJ2aRKZnXw36TrHKUaNi1bYV+NINzfbZUfW1mCc/7H2q+kyF5lxMm5dPBm0M9Wfaq8Ni9jIVecwULNli39sf2310RwjQ9WnUu7yp7D+08+ypyAJi5ul2NQ=
-  #run:
-  #- pipenv run python manage.py init_db
+deploy:
+  provider: heroku
+  app: frozen-retreat-73403
+  api_key:
+    secure: x9tiTR//EARHU/MFHE0Qjh0luzwN2DVq7yDIqCpvMfecBOP74pq3dDv2fu6mlK8VEg/z93Vu0JYvmZbswWjPS0qvoredgsgKDTpmlqHTU4xpQOJ24nIO0mnIm3hwAcDRovCxBAg2UfZGsOwY6o3/ycr7Snqk5NPcwI5VT9Q9dQL2HKPiahMeGHJRdOiEbeuvsYSGCoBH+7/ic7LJfLeI3cO3R28dsaUtkYqPMvud9cNQJd9NS372dBxtWLa8td4NVWU5mzFwnWVbAhFSxQt5spSiHeJIXFsrYMsQLDMQoKTgnZQSv3qV0uFAAkxMqrg1Bt/VRrpLH82qTBLO5NGl1kYBMRP1UySWUDQlZUI3/XpS3hP08rqNtqG0IjHdI8bYAR2FWOK16fQTkD1yGNWL667ZrdfqysdXzmzWpa3NaNLTqQj2DWJKsb5FDIlqyK0IZDrFLf7hJz46d4vxg29pfnpkkqVTdSBRaCFi9po88I/0sYSF2mA8oH8ZAjfb8fDRXZ9IEmUC/nnRtLH4c6/1u9lfEV6d1YjCxcn6hBryS8ytcRavStRkf+NVTLnN1nKR80LwjAK7AHRfFa4NKZQ86e/GlJGkIc2yqrdXX/oEzwcrrU7CKpNRnTw1yA4EkFDMA4sAd/t97G2owIJriw06ySHgm7PUl2fj96JOc8duioI=
+  run:
+  - pipenv run python manage.py init_db
