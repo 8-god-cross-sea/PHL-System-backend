@@ -11,7 +11,7 @@ def init_db():
     from app import db
 
     # drop and create tables
-    tables = [User, Patient, InHospital, Vaccine]
+    tables = [User, Patient, InHospital, Department, Medicine, Vaccine, Assay]
     db.database.drop_tables(tables)
     db.database.create_tables(tables)
 
@@ -22,7 +22,6 @@ def init_db():
     User.create(username='user2', password=make_password('user2'), email='user2@user.com')
     patient = Patient.create(name='汇汇的哈士奇', description='很2的狗')
     InHospital.create(patient=patient, status='已入院')
-    Vaccine.create(name='狂犬疫苗', price=80, count=99)
 
 
 if __name__ == '__main__':
