@@ -4,6 +4,6 @@ from peewee import *
 from app import db
 
 
-class UserDepartment(db.model):
+class UserDepartment(db.Model):
     user = ForeignKeyField(User)
     department = ForeignKeyField(Department)

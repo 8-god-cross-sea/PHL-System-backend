@@ -5,3 +5,4 @@ from app.model.department import Department
 from app.model.medicine import Medicine
 from app.model.vaccine import Vaccine
 from app.model.assay import Assay
+from app.model.case import Case
