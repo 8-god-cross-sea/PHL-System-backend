@@ -11,9 +11,6 @@ class TestCaseWithLoginSupport(object):
 
     @classmethod
     def setUpClass(cls):
-        from manage import init_db
-        init_db()
-
         from app import app
         cls.test_client = app.test_client()
 
@@ -46,6 +43,8 @@ class ResourceTestCase(TestCaseWithLoginSupport):
     login_as = TestCaseWithLoginSupport.login_in_as
 
     def __init__(self, method_name='runTest'):
+        from manage import init_db
+        init_db()
         super(ResourceTestCase, self).__init__(method_name)
         self.api_url = None
         self.model = None

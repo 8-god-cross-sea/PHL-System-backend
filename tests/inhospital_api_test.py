@@ -11,13 +11,14 @@ class InHospitalResourceTestCase(ResourceTestCase, unittest.TestCase):
         super().__init__(method_name)
         self.api_url = '/api/inhospital/'
         self.model = InHospital
+        patient = Patient.create(name='狗', description='狗的描述')
         self.data = dict(
-            patient=1,
+            patient=patient.id,
             leave_date='',
             status='已入院'
         )
         self.updated = dict(
-            patient=1,
+            patient=patient.id,
             leave_date=str(datetime.datetime.now()),
             status='已出院'
         )
