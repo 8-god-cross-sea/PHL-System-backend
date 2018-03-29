@@ -12,14 +12,14 @@ class MedicineResourceTestCase(ResourceTestCase, unittest.TestCase):
         self.data = dict(
             name='drug',
             price=20,
-            stock=20
+            count=20
         )
         self.updated = dict(
             name='drug',
             price=30,
-            stock=30
+            count=30
         )
-        self.fields = ['name', 'price', 'stock']
+        self.fields = ['name', 'price', 'count']
 
 
 if __name__ == '__main__':

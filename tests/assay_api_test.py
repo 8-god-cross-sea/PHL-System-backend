@@ -11,13 +11,17 @@ class AssayResourceTestCase(ResourceTestCase, unittest.TestCase):
         self.model = Assay
         self.data = dict(
             patient=1,
-            description='化验的指标'
+            wbc=6.8,
+            rbc=4.9,
+            plt=245
         )
         self.updated = dict(
             patient=1,
-            description='新的化验的指标'
+            wbc=5.8,
+            rbc=7.3,
+            plt=211
         )
-        self.fields = ['patient', 'description']
+        self.fields = ['patient', 'wbc', 'rbc', 'plt']
 
 
 if __name__ == '__main__':

@@ -5,4 +5,6 @@ from app.model.patient import Patient
 
 class Assay(db.Model):
     patient = ForeignKeyField(Patient)
-    description = CharField()
+    wbc = DoubleField()
+    rbc = DoubleField()
+    plt = DoubleField()

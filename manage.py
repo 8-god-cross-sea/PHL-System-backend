@@ -22,6 +22,10 @@ def init_db():
     User.create(username='user2', password=make_password('user2'), email='user2@user.com')
     patient = Patient.create(name='汇汇的哈士奇', description='很2的狗')
     InHospital.create(patient=patient, status='已入院')
+    Department.create(name='档案室', description='包括病例档案的合理保存与统计')
+    Vaccine.create(name='感冒疫苗', price=150, count=20)
+    Assay.create(patient=patient, wbc=9.4, rbc=5.1, plt=300)
+    Medicine.create(name='阿司匹林', price=21.3, count=140)
 
 
 if __name__ == '__main__':
