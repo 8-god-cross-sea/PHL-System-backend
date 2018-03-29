@@ -8,6 +8,7 @@ class BaseConfig:
     """
     DEBUG = False
     SECRET_KEY = os.getenv('SECRET_KEY', 'a default secret key')
+    CORS_SUPPORTS_CREDENTIALS = True
 
 
 class DevelopmentConfig(BaseConfig):
