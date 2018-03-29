@@ -1,6 +1,8 @@
 from flask_peewee.rest import RestAPI, Authentication
 
 from app.api.auth.role_auth import RoleAuth
+from app.model import *
+from app.api.resources import *
 
 
 def register_api(rest_api, model, rest_resource):
@@ -12,8 +14,7 @@ def setup(app):
     rest_api = RestAPI(app, default_auth=Authentication(protected_methods=[]))
 
     # register user api
-    from app.model.user import User
-    from app.api.resources.user_resource import UserResource
     register_api(rest_api, User, UserResource)
+    register_api(rest_api, InHospital, InHospitalResource)
 
     rest_api.setup()

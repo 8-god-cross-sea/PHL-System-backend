@@ -7,6 +7,7 @@ from .base_resource import BaseRestResource as Rest
 
 class APIRestResource(Rest):
     default_access = RoleAuth.EVERYONE
+    access_dict = {}
 
     def get_api_name(self):
         return self.model.__name__.lower()
