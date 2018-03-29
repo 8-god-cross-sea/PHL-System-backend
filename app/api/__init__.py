@@ -1,7 +1,8 @@
 from flask_peewee.rest import RestAPI, Authentication
 
-from app.api.auth.role_auth import RoleAuth
+from app.api.api_info import api_info
 from app.api.api_rest_resource import APIRestResource
+from app.api.auth.role_auth import RoleAuth
 from app.api.resources import *
 
 
@@ -17,4 +18,6 @@ def setup(app):
     # register user api
     for api in APIRestResource.__subclasses__():
         register_api(rest_api, api)
+    api_info(app)
+
     rest_api.setup()
