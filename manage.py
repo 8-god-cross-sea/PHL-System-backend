@@ -11,9 +11,9 @@ def init_db():
     from app import db
 
     # drop and create tables
-    tables = [User, Patient, InHospital, Department, Medicine, Vaccine, Assay]
-    db.database.drop_tables(tables)
-    db.database.create_tables(tables)
+    models = db.Model.__subclasses__()
+    db.database.drop_tables(models)
+    db.database.create_tables(models)
 
     # initialize data
     from flask_peewee.utils import make_password
