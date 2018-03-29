@@ -3,11 +3,16 @@ from flask_peewee.utils import get_object_or_404
 from app.api.auth.role_auth import RoleAuth
 from app.utils import response_manager
 from .base_resource import BaseRestResource as Rest
+import app.model
 
 
 class APIRestResource(Rest):
     default_access = RoleAuth.EVERYONE
     access_dict = {}
+
+    @classmethod
+    def get_model(cls):
+        return getattr(app.model, cls.__name__[:-8])
 
     def get_api_name(self):
         return self.model.__name__.lower()
