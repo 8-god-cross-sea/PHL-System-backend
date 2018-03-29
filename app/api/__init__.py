@@ -16,5 +16,6 @@ def setup(app):
     # register user api
     register_api(rest_api, User, UserResource)
     register_api(rest_api, InHospital, InHospitalResource)
-
+    register_api(rest_api, Vaccine, VaccineResource)
+    register_api(rest_api, Patient, PatientResource)
     rest_api.setup()
