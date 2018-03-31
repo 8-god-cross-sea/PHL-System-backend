@@ -38,6 +38,12 @@ class TestCaseWithLoginSupport(object):
 
         return _
 
+    def check_status(self, response, status=200):
+        self.assertEqual(response.status_code, status)
+
+    def check_response(self, response, expect):
+        self.assertEqual(response.data, expect.data)
+
 
 class ResourceTestCase(TestCaseWithLoginSupport):
     login_as = TestCaseWithLoginSupport.login_in_as
@@ -56,12 +62,6 @@ class ResourceTestCase(TestCaseWithLoginSupport):
         data = self.extract_data(response)
         for field in self.fields:
             self.assertEqual(expect[field], data[field])
-
-    def check_status(self, response, status=200):
-        self.assertEqual(response.status_code, status)
-
-    def check_response(self, response, expect):
-        self.assertEqual(response.data, expect.data)
 
     @staticmethod
     def extract_data(response):

@@ -18,7 +18,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
     DATABASE = {
         'name': 'dev.db',
-        'engine': 'peewee.SqliteDatabase'
+        'engine': 'playhouse.pool.PooledSqliteDatabase'
     }
 
 
@@ -30,7 +30,7 @@ class TestingConfig(BaseConfig):
     TESTING = True
     DATABASE = {
         'name': tempfile.NamedTemporaryFile().name,
-        'engine': 'peewee.SqliteDatabase'
+        'engine': 'playhouse.pool.PooledSqliteDatabase'
     }
 
 
@@ -40,7 +40,7 @@ class ProductionConfig(BaseConfig):
     """
     DEBUG = True
     DATABASE = {
-        'engine': 'peewee.PostgresqlDatabase',
+        'engine': 'playohuse.pool.PooledPostgresqlDatabase',
         'name': 'phl',
         'user': 'postgres',
         'password': 'hh',
@@ -59,7 +59,7 @@ class HerokuDeployConfig(BaseConfig):
     from urllib.parse import urlparse
     url = urlparse(os.getenv('DATABASE_URL'))
     DATABASE = {
-        'engine': 'peewee.PostgresqlDatabase',
+        'engine': 'playhouse.pool.PooledPostgresqlDatabase',
         'name': url.path[1:],
         'user': url.username,
         'password': url.password,
