@@ -22,4 +22,4 @@ def api_info(app):
             api_url_mapping[model_name + '_url'] = url + '/' + model_name
         api_url_mapping['BUILD_INFO'] = '{0} {1}'.format(os.getenv('HEROKU_RELEASE_VERSION'),
                                                          os.getenv('HEROKU_RELEASE_CREATED_AT'))
-        return Response(json.dumps(api_url_mapping), mimetype='application/json', status=200)
+        return Response(json.dumps(api_url_mapping, indent=2), mimetype='application/json', status=200)
