@@ -23,4 +23,4 @@ class CaseResourceTestCase(ResourceTestCase, unittest.TestCase):
             result='诊断m',
             treatment='治疗m'
         )
-        self.fields = ['name', 'reception', 'inspection', 'result', 'treatment']
+        self.fields = ['name']
