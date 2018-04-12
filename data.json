@@ -1,0 +1,158 @@
+{
+  "Patient": [
+    {
+      "name": "汇汇的哈士奇",
+      "description": "很2的狗"
+    },
+    {
+      "name": "xxx",
+      "description": "xxx"
+    }
+  ],
+  "Department": [
+    {
+      "name": "档案室",
+      "description": "包括病例档案的合理保存与统计"
+    }
+  ],
+  "Vaccine": [
+    {
+      "name": "感冒疫苗",
+      "price": 150,
+      "count": 20
+    }
+  ],
+  "Medicine": [
+    {
+      "name": "阿司匹林",
+      "price": 21.3,
+      "count": 140
+    }
+  ],
+  "Role": [
+    {
+      "name": "前台",
+      "description": "<b>前台的描述</b>"
+    },
+    {
+      "name": "医助",
+      "description": "<b>医助的描述</b>"
+    },
+    {
+      "name": "兽医师",
+      "description": "<b>兽医师的描述</b>"
+    }
+  ],
+  "Case": [
+    {
+      "name": "膀胱结石",
+      "reception": "<b>膀胱结石</b>的基本情况",
+      "inspection": "<b>膀胱结石</b>检查项目及结果",
+      "result": "<b>膀胱结石</b>诊断结果",
+      "treatment": "<b>膀胱结石</b>治疗方案"
+    }
+  ],
+  "CaseType": [
+    {
+      "name": "病种类别1"
+    },
+    {
+      "name": "病种类别2"
+    },
+    {
+      "name": "病种类别3"
+    }
+  ],
+  "Assay": [
+    {
+      "patient": 1,
+      "wbc": 9.4,
+      "rbc": 5.1,
+      "plt": 300
+    }
+  ],
+  "InHospital": [
+    {
+      "patient": 1,
+      "status": "已入院"
+    }
+  ],
+  "Choice": [
+    {
+      "case_type": 1,
+      "description": "这题选A",
+      "choice_a": "选项A",
+      "choice_b": "选项B",
+      "choice_c": "选项C",
+      "choice_d": "选项D",
+      "answer": 0
+    },
+    {
+      "case_type": 1,
+      "description": "这题选C",
+      "choice_a": "选项A",
+      "choice_b": "选项B",
+      "choice_c": "选项C",
+      "choice_d": "选项D",
+      "answer": 2
+    },
+    {
+      "case_type": 2,
+      "description": "这题选D",
+      "choice_a": "选项A",
+      "choice_b": "选项B",
+      "choice_c": "选项C",
+      "choice_d": "选项D",
+      "answer": 3
+    },
+    {
+      "case_type": 2,
+      "description": "这题选A",
+      "choice_a": "选项A",
+      "choice_b": "选项B",
+      "choice_c": "选项C",
+      "choice_d": "选项D",
+      "answer": 0
+    },
+    {
+      "case_type": 3,
+      "description": "这题选B",
+      "choice_a": "选项A",
+      "choice_b": "选项B",
+      "choice_c": "选项C",
+      "choice_d": "选项D",
+      "answer": 1
+    },
+    {
+      "case_type": 1,
+      "description": "这题选A",
+      "choice_a": "选项A",
+      "choice_b": "选项B",
+      "choice_c": "选项C",
+      "choice_d": "选项D",
+      "answer": 0
+    }
+  ],
+  "TestPaper": [
+    {
+      "name": "试卷1"
+    },
+    {
+      "name": "试卷2"
+    }
+  ],
+  "Exam": [
+    {
+      "test_paper": 1,
+      "name": "第一次考试",
+      "duration": 60,
+      "start": "2018-04-15 12:00:00"
+    },
+    {
+      "test_paper": 2,
+      "name": "第二次考试",
+      "duration": 60,
+      "start": "2018-04-16 12:00:00"
+    }
+  ]
+}
