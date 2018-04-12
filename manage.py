@@ -13,6 +13,7 @@ def init_db():
 
     # drop and create tables
     models = db.Model.__subclasses__()
+    models += {m2m.get_through_model() for model in models for m2m in model._meta.manytomany.values()}
     db.database.drop_tables(models)
     db.database.create_tables(models)
 
@@ -55,22 +56,9 @@ def init_db():
     tp1 = TestPaper.create(name='试卷1')
     tp2 = TestPaper.create(name='试卷2')
 
-    TestPaperChoice.create(test_paper_id=tp1, choice_id=c1_1)
-    TestPaperChoice.create(test_paper_id=tp1, choice_id=c2_1)
-    TestPaperChoice.create(test_paper_id=tp1, choice_id=c3_2)
-    TestPaperChoice.create(test_paper_id=tp1, choice_id=c3_1)
-    TestPaperChoice.create(test_paper_id=tp1, choice_id=c2_2)
-
-    TestPaperChoice.create(test_paper_id=tp2, choice_id=c1_2)
-    TestPaperChoice.create(test_paper_id=tp2, choice_id=c2_2)
-    TestPaperChoice.create(test_paper_id=tp2, choice_id=c3_2)
-    TestPaperChoice.create(test_paper_id=tp2, choice_id=c3_1)
-
     ex1 = Exam.create(test_paper=tp1, name='第一次考试', duration=60, start=str(datetime.datetime(2018, 4, 15, 12)))
     ex2 = Exam.create(test_paper=tp2, name='第二次考试', duration=60, start=str(datetime.datetime(2018, 4, 16, 12)))
 
-    ExamUser.create(exam_id=ex1, user_id=user)
-    ExamUser.create(exam_id=ex2, user_id=user2)
     print('db init finished')
 
 

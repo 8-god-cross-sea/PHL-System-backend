@@ -1,6 +1,7 @@
 from peewee import *
 from app import db
-from app.model.test_paper import TestPaper
+from app.model.testpaper import TestPaper
+from app.model.user import User
 
 
 class Exam(db.Model):
@@ -8,3 +9,5 @@ class Exam(db.Model):
     name = CharField()
     duration = DoubleField()
     start = DateTimeField()
+
+    users = ManyToManyField(User, backref='exams')
