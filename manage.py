@@ -3,6 +3,7 @@ from app import app
 from app.model import *
 from peewee import fn
 import json
+from os.path import dirname, join
 
 manager = Manager(app)
 
@@ -27,7 +28,7 @@ def init_db():
     User.create(username='user', password=make_password('user'), email='user@user.com')
     User.create(username='user2', password=make_password('user2'), email='user2@user.com')
 
-    with open('data.json') as f:
+    with open(join(dirname(__file__), 'data.json')) as f:
         data = json.load(f)
 
     for key, items in data.items():
