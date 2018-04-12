@@ -7,7 +7,7 @@ import app.model
 
 
 class APIRestResource(Rest):
-    default_access = RoleAuth.EVERYONE
+    default_access = RoleAuth.ANY_USER
     access_dict = {}
 
     @classmethod

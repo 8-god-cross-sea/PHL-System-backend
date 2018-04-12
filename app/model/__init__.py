@@ -6,3 +6,10 @@ from app.model.medicine import Medicine
 from app.model.vaccine import Vaccine
 from app.model.assay import Assay
 from app.model.case import Case
+from app.model.role import Role
+from app.model.case_type import CaseType
+from app.model.choice import Choice
+from app.model.test_paper import TestPaper
+from app.model.testpaper_choice import TestPaperChoice
+from app.model.exam import Exam
+from app.model.exam_user import ExamUser
