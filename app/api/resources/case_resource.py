@@ -1,14 +1,14 @@
 from flask_peewee.utils import get_object_or_404
 from app.api.api_rest_resource import APIRestResource
+from app.model.case import Case
 
 
 class CaseResource(APIRestResource):
-    exclude = ('reception', 'inspection', 'result', 'treatment')
+    exclude = (Case.inspection, Case.reception, Case.result, Case.treatment)
 
-    def get_obj(self, pk):
-        obj = get_object_or_404(self.get_query(), self.pk == pk)
-        s = self.get_serializer()
-        data = self.prepare_data(
-            obj, s.serialize_object(obj, self._fields, {})
-        )
-        return self.response(data)
+    def api_detail(self, pk, methods=None):
+        backup = self.exclude
+        self.exclude = ()
+        response = super().api_detail(pk, methods)
+        self.exclude = backup
+        return response

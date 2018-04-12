@@ -21,7 +21,7 @@ class AssayResourceTestCase(ResourceTestCase, unittest.TestCase):
             rbc=7.3,
             plt=211
         )
-        self.fields = ['patient', 'wbc', 'rbc', 'plt']
+        self.fields = ['wbc', 'rbc', 'plt']
 
 
 if __name__ == '__main__':

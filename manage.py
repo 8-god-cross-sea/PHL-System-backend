@@ -66,8 +66,8 @@ def init_db():
     TestPaperChoice.create(test_paper_id=tp2, choice_id=c3_2)
     TestPaperChoice.create(test_paper_id=tp2, choice_id=c3_1)
 
-    ex1 = Exam.create(test_paper_id=tp1, name='第一次考试', duration=60, start=datetime.datetime(2018, 4, 15, 12))
-    ex2 = Exam.create(test_paper_id=tp2, name='第二次考试', duration=60, start=datetime.datetime(2018, 4, 16, 12))
+    ex1 = Exam.create(test_paper=tp1, name='第一次考试', duration=60, start=str(datetime.datetime(2018, 4, 15, 12)))
+    ex2 = Exam.create(test_paper=tp2, name='第二次考试', duration=60, start=str(datetime.datetime(2018, 4, 16, 12)))
 
     ExamUser.create(exam_id=ex1, user_id=user)
     ExamUser.create(exam_id=ex2, user_id=user2)

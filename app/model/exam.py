@@ -4,7 +4,7 @@ from app.model.test_paper import TestPaper
 
 
 class Exam(db.Model):
-    test_paper_id = ForeignKeyField(TestPaper)
+    test_paper = ForeignKeyField(TestPaper)
     name = CharField()
     duration = DoubleField()
     start = DateTimeField()

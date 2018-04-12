@@ -1,7 +1,11 @@
+import json
+from flask import request
+from flask import Response
 from flask import abort
 from werkzeug.exceptions import *
 from flask_peewee.rest import RestResource
 from peewee import PeeweeException
+from playhouse.shortcuts import model_to_dict
 
 from app import model
 from app.api.auth.role_auth import RoleAuth
@@ -43,3 +47,9 @@ class APIRestResource(RestResource):
         except PeeweeException:
             abort(400)
 
+    def prepare_data(self, obj, data):
+        return model_to_dict(obj, exclude=self.exclude)
+
+    def response(self, data):
+        kwargs = {} if request.is_xhr else {'indent': 2}
+        return Response(json.dumps(data, **kwargs, default=str), mimetype='application/json')

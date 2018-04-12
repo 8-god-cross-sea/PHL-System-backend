@@ -7,10 +7,11 @@ from app import auth
 from app.api.api_rest_resource import APIRestResource
 from app.api.auth.role_auth import RoleAuth
 from app.utils import response_manager
+from app.model.user import User
 
 
 class UserResource(APIRestResource):
-    exclude = ('password', 'permission')
+    exclude = (User.password, User.permission)
     default_access = RoleAuth.ADMIN
 
     access_dict = {

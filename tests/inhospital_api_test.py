@@ -11,7 +11,7 @@ class InHospitalResourceTestCase(ResourceTestCase, unittest.TestCase):
         super().__init__(method_name)
         self.api_url = '/api/inhospital/'
         self.model = InHospital
-        patient = Patient.create(name='狗', description='狗的描述')
+        patient = Patient.get_by_id(1)
         self.data = dict(
             patient=patient.id,
             leave_date='',
@@ -22,7 +22,10 @@ class InHospitalResourceTestCase(ResourceTestCase, unittest.TestCase):
             leave_date=str(datetime.datetime.now()),
             status='已出院'
         )
-        self.fields = ['patient', 'status']
+        self.fields = ['status']
+
+    def test_curd_operations(self):
+        super().test_curd_operations()
 
 
 if __name__ == '__main__':
