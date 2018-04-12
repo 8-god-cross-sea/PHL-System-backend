@@ -40,9 +40,9 @@ class ProductionConfig(BaseConfig):
     """
     DEBUG = True
     DATABASE = {
-        'engine': 'playohuse.pool.PooledPostgresqlDatabase',
+        'engine': 'playhouse.pool.PooledPostgresqlDatabase',
         'name': 'phl',
-        'user': 'postgres',
+        'user': 'hartchu',
         'password': 'hh',
         'host': '127.0.0.1',
         'port': 5432,

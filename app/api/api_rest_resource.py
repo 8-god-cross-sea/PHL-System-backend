@@ -1,45 +1,45 @@
-from flask_peewee.utils import get_object_or_404
+from flask import abort
+from werkzeug.exceptions import *
+from flask_peewee.rest import RestResource
+from peewee import PeeweeException
 
+from app import model
 from app.api.auth.role_auth import RoleAuth
-from app.utils import response_manager
-from .base_resource import BaseRestResource as Rest
-import app.model
 
 
-class APIRestResource(Rest):
+class APIRestResource(RestResource):
     default_access = RoleAuth.ANY_USER
     access_dict = {}
 
+    def get_urls(self):
+        return (
+            ('/', self.require_method(self.api_list, ['GET', 'POST'])),
+            ('/<pk>', self.require_method(self.api_detail, ['GET', 'POST', 'PUT', 'DELETE'])),
+        )
+
     @classmethod
     def get_model(cls):
-        return getattr(app.model, cls.__name__[:-8])
+        return getattr(model, cls.__name__[:-8])
 
     def get_api_name(self):
         return self.model.__name__.lower()
 
-    @Rest.route('/')
+    def authorize(self, name):
+        return self.authentication.authorize(name)
+
     def api_list(self):
-        return self.object_list()
-
-    @Rest.route('/', ['POST', ' PUT'])
-    def root(self):
         try:
-            ret = self.create()
-        except Exception as e:
-            return response_manager.make_bad_request_response(str(e))
-        return ret
+            return super().api_list()
+        except HTTPException as e:
+            raise e
+        except PeeweeException:
+            abort(400)
 
-    @Rest.route('/<pk>', ['GET'])
-    def get_obj(self, pk):
-        obj = get_object_or_404(self.get_query(), self.pk == pk)
-        return self.object_detail(obj)
+    def api_detail(self, pk, method=None):
+        try:
+            return super().api_detail(pk, method)
+        except HTTPException as e:
+            raise e
+        except PeeweeException:
+            abort(400)
 
-    @Rest.route('/<pk>', ['POST', 'PUT'])
-    def edit_obj(self, pk):
-        obj = get_object_or_404(self.get_query(), self.pk == pk)
-        return self.edit(obj)
-
-    @Rest.route('/<pk>', ['DELETE'])
-    def delete_obj(self, pk):
-        obj = get_object_or_404(self.get_query(), self.pk == pk)
-        return self.delete(obj)

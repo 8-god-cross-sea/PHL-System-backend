@@ -6,7 +6,6 @@ from flask_peewee.utils import make_password
 from app import auth
 from app.api.api_rest_resource import APIRestResource
 from app.api.auth.role_auth import RoleAuth
-from app.api.base_resource import BaseRestResource as Rest
 from app.utils import response_manager
 
 
@@ -20,7 +19,13 @@ class UserResource(APIRestResource):
         'user_detail': RoleAuth.ANY_USER
     }
 
-    @Rest.route('/login', ['POST'])
+    def get_urls(self):
+        return super().get_urls() + (
+            ('/login', self.require_method(self.login, ['POST'])),
+            ('/logout', self.require_method(self.logout, ['GET'])),
+            ('/me', self.require_method(self.user_detail, ['GET'])),
+        )
+
     def login(self):
         username = request.json['username']
         password = request.json['password']
@@ -31,12 +36,10 @@ class UserResource(APIRestResource):
         else:
             return response_manager.LOGIN_FAILED_RESPONSE
 
-    @Rest.route('/logout')
     def logout(self):
         auth.logout_user()
         return response_manager.LOGOUT_SUCCESS_RESPONSE
 
-    @Rest.route('/me')
     def user_detail(self):
         return self.object_detail(auth.get_logged_in_user())
 
