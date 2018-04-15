@@ -41,10 +41,9 @@ class ProductionConfig(BaseConfig):
     DEBUG = True
     DATABASE = {
         'engine': 'playhouse.pool.PooledPostgresqlDatabase',
-        'name': 'phl',
-        'user': 'hartchu',
-        'password': 'hh',
-        'host': '127.0.0.1',
+        'name': 'postgres',
+        'user': 'postgres',
+        'host': 'db',
         'port': 5432,
     }
 
