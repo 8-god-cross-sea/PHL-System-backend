@@ -14,12 +14,14 @@ Flask-Cors = "*"
 flask = "*"
 flask-script = "*"
 gunicorn = "*"
+waitress = "*"
 "psycopg2-binary" = "*"
 
 [dev-packages]
 nose = "*"
 coverage = "*"
 python-coveralls = "*"
+
 
 [requires]
 python_version = "3.6"
