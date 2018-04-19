@@ -14,6 +14,7 @@ from app.api.auth.role_auth import RoleAuth
 class APIRestResource(RestResource):
     default_access = RoleAuth.ANY_USER
     show_m2m = False
+    show_backref = False
     access_dict = {}
 
     def get_urls(self):
@@ -49,7 +50,7 @@ class APIRestResource(RestResource):
             abort(400)
 
     def prepare_data(self, obj, data):
-        return model_to_dict(obj, exclude=self.exclude, manytomany=self.show_m2m)
+        return model_to_dict(obj, exclude=self.exclude, manytomany=self.show_m2m, backrefs=self.show_backref)
 
     def response(self, data):
         kwargs = {} if request.is_xhr else {'indent': 2}
