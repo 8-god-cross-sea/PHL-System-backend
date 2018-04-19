@@ -39,7 +39,7 @@ def init_db():
     TestPaper.get_by_id(1).choices.add(Choice.select().order_by(fn.Random()).limit(3))
     TestPaper.get_by_id(2).choices.add(Choice.select().order_by(fn.Random()).limit(3))
 
-    Exam.get_by_id(1).users.add(User.select().where(User.id > 1))
+    Exam.get_by_id(1).users.add(User.select().where(User.id > 0))
     Exam.get_by_id(2).users.add(User.select().where(User.id > 1))
 
     Report.create(user=user, exam=Exam.get_by_id(1), score=100)
