@@ -11,4 +11,4 @@ class Choice(db.Model):
     choice_c = CharField(null=True)
     choice_d = CharField(null=True)
     choice_e = CharField(null=True)
-    answer = CharField()
+    answer = IntegerField()
