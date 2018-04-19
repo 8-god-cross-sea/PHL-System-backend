@@ -8,7 +8,6 @@ from app.api.api_rest_resource import APIRestResource
 from app.api.auth.role_auth import RoleAuth
 from app.model.choice import Choice
 from app.model.report import Report
-from app.model.user import User
 from app.utils.response_manager import NOT_PERMITTED_RESPONSE, ALREADY_TAKEN_EXAM_RESPONSE
 
 
@@ -16,7 +15,8 @@ class ExamResource(APIRestResource):
     default_access = RoleAuth.ADMIN
     access_dict = {
         'my_exams': RoleAuth.ANY_USER,
-        'begin_exam': RoleAuth.ANY_USER
+        'begin_exam': RoleAuth.ANY_USER,
+        'submit': RoleAuth.ANY_USER
     }
 
     def get_urls(self):
