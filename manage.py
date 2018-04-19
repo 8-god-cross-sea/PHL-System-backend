@@ -25,7 +25,7 @@ def init_db():
     from flask_peewee.utils import make_password
     User.create(username='admin', password=make_password('admin'), email='admin@admin.com',
                 permission=0b10000)
-    User.create(username='user', password=make_password('user'), email='user@user.com')
+    user = User.create(username='user', password=make_password('user'), email='user@user.com')
     User.create(username='user2', password=make_password('user2'), email='user2@user.com')
 
     with open(join(dirname(__file__), 'data.json'), encoding='utf-8') as f:
@@ -42,6 +42,7 @@ def init_db():
     Exam.get_by_id(1).users.add(User.select().where(User.id > 1))
     Exam.get_by_id(2).users.add(User.select().where(User.id > 1))
 
+    Report.create(user=user, exam=Exam.get_by_id(1), score=100)
     print('db init finished')
 
 

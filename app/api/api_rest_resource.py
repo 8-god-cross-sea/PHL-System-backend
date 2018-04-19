@@ -9,6 +9,8 @@ from playhouse.shortcuts import model_to_dict
 
 from app import model
 from app.api.auth.role_auth import RoleAuth
+from app.model.user import User
+from app.model.exam import Exam
 
 
 class APIRestResource(RestResource):
@@ -16,6 +18,8 @@ class APIRestResource(RestResource):
     show_m2m = False
     show_backref = False
     access_dict = {}
+    always_exclude = (User.password, User.permission, Exam.token)
+    exclude = ()
 
     def get_urls(self):
         return (
@@ -50,7 +54,8 @@ class APIRestResource(RestResource):
             abort(400)
 
     def prepare_data(self, obj, data):
-        return model_to_dict(obj, exclude=self.exclude, manytomany=self.show_m2m, backrefs=self.show_backref)
+        return model_to_dict(obj, exclude=self.always_exclude + self.exclude, manytomany=self.show_m2m,
+                             backrefs=self.show_backref)
 
     def response(self, data):
         kwargs = {} if request.is_xhr else {'indent': 2}

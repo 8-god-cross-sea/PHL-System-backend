@@ -11,3 +11,4 @@ from app.model.case_type import CaseType
 from app.model.choice import Choice
 from app.model.testpaper import TestPaper
 from app.model.exam import Exam
+from app.model.report import Report

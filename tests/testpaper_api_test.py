@@ -21,7 +21,7 @@ class TestPaperResource(ResourceTestCase, unittest.TestCase):
     @ResourceTestCase.login_as(username='admin', password='admin')
     def test_update_choice(self):
         updated_choices = [2, 1, 6]
-        response = self.test_client.put(self.api_url + '1/choice', data=json.dumps(updated_choices),
+        response = self.test_client.put(self.api_url + '1/choices', data=json.dumps(updated_choices),
                                         content_type='application/json')
         self.check_response(response, response_manager.UPDATED_SUCCESS_RESPONSE)
         response = self.get(1)

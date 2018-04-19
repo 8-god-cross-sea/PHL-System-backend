@@ -9,5 +9,5 @@ class Exam(db.Model):
     name = CharField()
     duration = DoubleField()
     start = DateTimeField()
-
+    token = IntegerField(default=fn.Random())
     users = ManyToManyField(User, backref='exams')
