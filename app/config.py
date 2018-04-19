@@ -26,7 +26,6 @@ class TestingConfig(BaseConfig):
     """
     Testing application configuration
     """
-    DEBUG = True
     TESTING = True
     DATABASE = {
         'name': tempfile.NamedTemporaryFile().name,
@@ -38,7 +37,6 @@ class ProductionConfig(BaseConfig):
     """
     Production application configuration
     """
-    DEBUG = True
     DATABASE = {
         'engine': 'playhouse.pool.PooledPostgresqlDatabase',
         'name': 'postgres',
@@ -52,8 +50,6 @@ class HerokuDeployConfig(BaseConfig):
     """
     Heroku deploy application config
     """
-    DEBUG = True
-
     # parse database url for flask_peewee
     from urllib.parse import urlparse
     url = urlparse(os.getenv('DATABASE_URL'))
