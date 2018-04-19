@@ -9,7 +9,7 @@ class TestPaperResource(APIRestResource):
 
     def get_urls(self):
         return super().get_urls() + (
-            ('/<pk>/choice', self.require_method(self.update_choice, ['PUT'])),
+            ('/<pk>/choices', self.require_method(self.update_choice, ['PUT'])),
         )
 
     def update_choice(self, pk):
