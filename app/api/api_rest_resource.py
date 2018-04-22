@@ -40,18 +40,11 @@ class APIRestResource(RestResource):
     def api_list(self):
         try:
             return super().api_list()
-        except HTTPException as e:
-            raise e
-        except PeeweeException:
-            abort(400)
+        except (HTTPException, PeeweeException) as e:
+            abort(400, e)
 
     def api_detail(self, pk, method=None):
-        try:
-            return super().api_detail(pk, method)
-        except HTTPException as e:
-            raise e
-        except PeeweeException:
-            abort(400)
+        return super().api_detail(pk, method)
 
     def prepare_data(self, obj, data):
         return model_to_dict(obj, exclude=self.always_exclude + self.exclude, manytomany=self.show_m2m,
