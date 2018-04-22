@@ -44,6 +44,10 @@ class TestCaseWithLoginSupport(object):
     def check_response(self, response, expect):
         self.assertEqual(response.data, expect.data)
 
+    def check_response_and_status(self, response, actual_response, actual_code):
+        self.check_response(response, actual_response)
+        self.check_status(response, actual_code)
+
 
 class ResourceTestCase(TestCaseWithLoginSupport):
     login_as = TestCaseWithLoginSupport.login_in_as
