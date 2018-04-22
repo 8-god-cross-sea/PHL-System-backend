@@ -9,12 +9,6 @@ pipenv install
 pipenv run gunicorn app:app
 ```
 
-On Windows:
-```bash
-pipenv install
-pipenv run waitress-serve --port=xxxx app:app
-```
-
 Trough Docker:
 ```bash
 docker-compose up # use production config by default
