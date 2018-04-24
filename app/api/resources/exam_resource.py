@@ -33,8 +33,11 @@ class ExamResource(APIRestResource):
         return check_password(str(exam.id) + str(exam.token), token)
 
     def my_exams(self):
+        # not standardized API
         user = auth.get_logged_in_user()
-        return self.response({"objects": [model_to_dict(exam, exclude=self.always_exclude) for exam in user.exams]})
+        return self.response(
+            {"meta": {"previous": "", "next": ""},
+             "objects": [model_to_dict(exam, exclude=self.always_exclude) for exam in user.exams]})
 
     def begin_exam(self):
         eid = request.args.get('eid')

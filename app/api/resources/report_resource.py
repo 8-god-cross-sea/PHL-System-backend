@@ -21,8 +21,10 @@ class ReportResource(APIRestResource):
         )
 
     def my(self):
+        # not standardized API
         user = auth.get_logged_in_user()
         return self.response(
-            {"objects": [
-                model_to_dict(report, exclude=(Report.user, Report.exam.test_paper, Report.exam.token), recurse=True)
-                for report in Report.select().where(Report.user == user)]})
+            {"meta": {"previous": "", "next": ""},
+             "objects": [
+                 model_to_dict(report, exclude=(Report.user, Report.exam.test_paper, Report.exam.token), recurse=True)
+                 for report in Report.select().where(Report.user == user)]})
