@@ -1,14 +1,30 @@
-import unittest
 import json
-from tests import TestCaseWithLoginSupport
+import unittest
+
+from app.model import Exam
 from app.utils import response_manager
+from tests import ResourceTestCase
+from tests import TestCaseWithLoginSupport
 
 
-class ExamResourceTest(TestCaseWithLoginSupport, unittest.TestCase):
+class ExamResourceTest(ResourceTestCase, unittest.TestCase):
     def __init__(self, method_name='runTest'):
         super().__init__(method_name)
-        from manage import init_db
-        init_db()
+        self.api_url = '/api/exam/'
+        self.model = Exam
+        self.data = dict(
+            test_paper=1,
+            name='test exam',
+            duration=60,
+            start='2018-04-25 22:22:00'
+        )
+        self.updated = dict(
+            test_paper=2,
+            name='test exam1',
+            duration=90,
+            start='2018-04-25 22:22:10'
+        )
+        self.fields = ['name', 'duration', 'start']
 
     @TestCaseWithLoginSupport.login_in_as('user', 'user')
     def test_my_exam(self):
