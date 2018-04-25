@@ -1,9 +1,11 @@
-from flask_script import Manager
-from app import app
-from app.model import *
-from peewee import fn
 import json
 from os.path import dirname, join
+
+from flask_script import Manager
+from peewee import fn
+
+from app import app
+from app.model import *
 
 manager = Manager(app)
 
@@ -41,6 +43,9 @@ def init_db():
 
     Exam.get_by_id(1).users.add(User.select().where(User.id > 0))
     Exam.get_by_id(2).users.add(User.select().where(User.id > 1))
+    for exam_id in range(3, 10):
+        for user_id in User.select():
+            Exam.users.get_through_model().create(exam=exam_id, user=user_id)
 
     Report.create(user=user, exam=Exam.get_by_id(1), score=100)
     print('db init finished')
