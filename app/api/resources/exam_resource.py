@@ -8,6 +8,7 @@ from app.api.api_rest_resource import APIRestResource
 from app.api.auth.role_auth import RoleAuth
 from app.model.choice import Choice
 from app.model.report import Report
+from app.model.user import User
 from app.utils.response_manager import NOT_PERMITTED_RESPONSE, ALREADY_TAKEN_EXAM_RESPONSE
 
 
@@ -18,6 +19,20 @@ class ExamResource(APIRestResource):
         'begin_exam': RoleAuth.ANY_USER,
         'submit': RoleAuth.ANY_USER
     }
+
+    def create(self):
+        try:
+            data = self.read_request_data()
+        except ValueError:
+            return self.response_bad_request()
+
+        obj, models = self.deserialize_object(data, self.model())
+
+        self.save_related_objects(obj, data)
+        obj = self.save_object(obj, data)
+        obj.users.add(User.select())
+
+        return self.response(self.serialize_object(obj))
 
     def get_urls(self):
         return super().get_urls() + (
