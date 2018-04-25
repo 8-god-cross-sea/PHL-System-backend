@@ -6,8 +6,8 @@ from flask_peewee.utils import make_password
 from app import auth
 from app.api.api_rest_resource import APIRestResource
 from app.api.auth.role_auth import RoleAuth
-from app.utils import response_manager
 from app.model.user import User
+from app.utils import response_manager
 
 
 class UserResource(APIRestResource):
@@ -32,6 +32,7 @@ class UserResource(APIRestResource):
         password = request.json['password']
         user = auth.authenticate(username, password)
         if user:
+            auth.logout_user()
             auth.login_user(user)
             return response_manager.LOGIN_SUCCESS_RESPONSE
         else:
