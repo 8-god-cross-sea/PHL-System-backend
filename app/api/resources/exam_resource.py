@@ -21,13 +21,8 @@ class ExamResource(APIRestResource):
     }
 
     def create(self):
-        try:
-            data = self.read_request_data()
-        except ValueError:
-            return self.response_bad_request()
-
+        data = self.read_request_data()
         obj, models = self.deserialize_object(data, self.model())
-
         self.save_related_objects(obj, data)
         obj = self.save_object(obj, data)
         obj.users.add(User.select())
